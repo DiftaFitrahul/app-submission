@@ -20,7 +20,7 @@ LoginData _$LoginDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LoginData {
-  String get error => throw _privateConstructorUsedError;
+  bool get error => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   LoginResult get loginResult => throw _privateConstructorUsedError;
 
@@ -35,7 +35,7 @@ abstract class $LoginDataCopyWith<$Res> {
   factory $LoginDataCopyWith(LoginData value, $Res Function(LoginData) then) =
       _$LoginDataCopyWithImpl<$Res, LoginData>;
   @useResult
-  $Res call({String error, String message, LoginResult loginResult});
+  $Res call({bool error, String message, LoginResult loginResult});
 
   $LoginResultCopyWith<$Res> get loginResult;
 }
@@ -61,7 +61,7 @@ class _$LoginDataCopyWithImpl<$Res, $Val extends LoginData>
       error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
+              as bool,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,7 @@ abstract class _$$LoginDataImplCopyWith<$Res>
       __$$LoginDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String error, String message, LoginResult loginResult});
+  $Res call({bool error, String message, LoginResult loginResult});
 
   @override
   $LoginResultCopyWith<$Res> get loginResult;
@@ -115,7 +115,7 @@ class __$$LoginDataImplCopyWithImpl<$Res>
       error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
+              as bool,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -132,7 +132,7 @@ class __$$LoginDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LoginDataImpl implements _LoginData {
   const _$LoginDataImpl(
-      {this.error = "",
+      {this.error = false,
       this.message = "",
       this.loginResult = const LoginResult()});
 
@@ -141,7 +141,7 @@ class _$LoginDataImpl implements _LoginData {
 
   @override
   @JsonKey()
-  final String error;
+  final bool error;
   @override
   @JsonKey()
   final String message;
@@ -185,7 +185,7 @@ class _$LoginDataImpl implements _LoginData {
 
 abstract class _LoginData implements LoginData {
   const factory _LoginData(
-      {final String error,
+      {final bool error,
       final String message,
       final LoginResult loginResult}) = _$LoginDataImpl;
 
@@ -193,7 +193,7 @@ abstract class _LoginData implements LoginData {
       _$LoginDataImpl.fromJson;
 
   @override
-  String get error;
+  bool get error;
   @override
   String get message;
   @override

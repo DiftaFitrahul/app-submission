@@ -8,7 +8,7 @@ part of 'login_data.dart';
 
 _$LoginDataImpl _$$LoginDataImplFromJson(Map<String, dynamic> json) =>
     _$LoginDataImpl(
-      error: json['error'] as String? ?? "",
+      error: json['error'] as bool? ?? false,
       message: json['message'] as String? ?? "",
       loginResult: json['loginResult'] == null
           ? const LoginResult()

@@ -5,7 +5,7 @@ part 'login_data.g.dart';
 @freezed
 class LoginData with _$LoginData {
   const factory LoginData({
-    @Default("") String error,
+    @Default(false) bool error,
     @Default("") String message,
     @Default(LoginResult()) LoginResult loginResult,
   }) = _LoginData;
