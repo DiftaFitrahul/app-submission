@@ -3,18 +3,24 @@ part of "login_bloc.dart";
 enum LoginStateStatus { initial, loading, success, failure }
 
 class LoginState {
-  final String email;
-  final String password;
   final LoginStateStatus stateStatus;
+  final LoginData loginData;
 
-  const LoginState(
-      {required this.email, required this.password, required this.stateStatus});
+  const LoginState({required this.stateStatus, required this.loginData});
 
   factory LoginState.initial() {
     return const LoginState(
-      email: "",
-      password: "",
-      stateStatus: LoginStateStatus.initial,
-    );
+        stateStatus: LoginStateStatus.initial, loginData: LoginData());
+  }
+
+  LoginState copyWith({
+    String? email,
+    String? password,
+    LoginStateStatus? stateStatus,
+    LoginData? loginData,
+  }) {
+    return LoginState(
+        stateStatus: stateStatus ?? this.stateStatus,
+        loginData: loginData ?? this.loginData);
   }
 }

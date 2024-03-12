@@ -7,11 +7,14 @@ import 'package:story_app/utils/exceptions.dart';
 import '../../../../../utils/failure.dart';
 
 abstract class AuthRepository {
-  final AuthDataSource authDataSource;
-  final LocalDataSorce localDataSorce;
+  final AuthDataSource _authDataSource;
+  final LocalDataSorce _localDataSorce;
 
-  const AuthRepository(
-      {required this.authDataSource, required this.localDataSorce});
+  AuthRepository(
+      {required AuthDataSource authDataSource,
+      required LocalDataSorce localDataSorce})
+      : _authDataSource = authDataSource,
+        _localDataSorce = localDataSorce;
 
   Future<Either<Failure, LoginData>> login(
       {required String email, required String password});
@@ -28,8 +31,8 @@ class AuthRepositoryImp extends AuthRepository {
       {required String email, required String password}) async {
     try {
       final loginData =
-          await authDataSource.login(email: email, password: password);
-      await localDataSorce.saveDataUser(
+          await _authDataSource.login(email: email, password: password);
+      await _localDataSorce.saveDataUser(
           userId: loginData.loginResult.userId,
           token: loginData.loginResult.token);
       return Right(loginData);
@@ -44,7 +47,7 @@ class AuthRepositoryImp extends AuthRepository {
       required String email,
       required String password}) async {
     try {
-      final registerData = await authDataSource.register(
+      final registerData = await _authDataSource.register(
           name: name, email: email, password: password);
       return Right(registerData == "User Created");
     } on ServerExceptions {
