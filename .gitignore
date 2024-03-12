@@ -1,3 +1,7 @@
+*.env
+env.g.dart
+env.dart
+
 # Miscellaneous
 *.class
 *.log
