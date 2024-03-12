@@ -1,7 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class LocalDataSorce {
-  const LocalDataSorce();
+class LocalDataSource {
+  const LocalDataSource();
   final _userIdKey = "userIdKey";
   final _tokenKey = "userTokenKey";
   final _secureStorage = const FlutterSecureStorage();
@@ -10,10 +10,10 @@ class LocalDataSorce {
         encryptedSharedPreferences: true,
       );
 
-  Future<String?> userToken() async =>
+  Future<String?> get userToken async =>
       await _secureStorage.read(key: _tokenKey, aOptions: _getAndroidOptions());
 
-  Future<String?> userId() async => await _secureStorage.read(
+  Future<String?> get userId async => await _secureStorage.read(
       key: _userIdKey, aOptions: _getAndroidOptions());
 
   Future<void> saveDataUser(

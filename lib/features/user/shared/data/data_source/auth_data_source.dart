@@ -25,7 +25,7 @@ class AuthDataSource {
     }
   }
 
-  Future<String> register(
+  Future<bool> register(
       {required String name,
       required String email,
       required String password}) async {
@@ -38,7 +38,7 @@ class AuthDataSource {
       });
       if (response.statusCode == 200 || response.statusCode == 201) {
         final body = jsonDecode(response.body);
-        return body['message'];
+        return body['error'];
       } else {
         throw ServerExceptions();
       }

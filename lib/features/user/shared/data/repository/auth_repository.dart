@@ -8,11 +8,11 @@ import '../../../../../utils/failure.dart';
 
 abstract class AuthRepository {
   final AuthDataSource _authDataSource;
-  final LocalDataSorce _localDataSorce;
+  final LocalDataSource _localDataSorce;
 
   AuthRepository(
       {required AuthDataSource authDataSource,
-      required LocalDataSorce localDataSorce})
+      required LocalDataSource localDataSorce})
       : _authDataSource = authDataSource,
         _localDataSorce = localDataSorce;
 
@@ -30,12 +30,12 @@ class AuthRepositoryImp extends AuthRepository {
   Future<Either<Failure, LoginData>> login(
       {required String email, required String password}) async {
     try {
-      final loginData =
+      final loginDataSource =
           await _authDataSource.login(email: email, password: password);
       await _localDataSorce.saveDataUser(
-          userId: loginData.loginResult.userId,
-          token: loginData.loginResult.token);
-      return Right(loginData);
+          userId: loginDataSource.loginResult.userId,
+          token: loginDataSource.loginResult.token);
+      return Right(loginDataSource);
     } on ServerExceptions {
       return Left(ServerFailure(message: "Login Error"));
     }
@@ -49,7 +49,8 @@ class AuthRepositoryImp extends AuthRepository {
     try {
       final registerData = await _authDataSource.register(
           name: name, email: email, password: password);
-      return Right(registerData == "User Created");
+      if (!registerData) return Left(ServerFailure(message: "Register Error"));
+      return Right(registerData);
     } on ServerExceptions {
       return Left(ServerFailure(message: "Register Error"));
     }
