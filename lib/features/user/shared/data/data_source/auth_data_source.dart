@@ -15,13 +15,21 @@ class AuthDataSource {
         "email": email,
         "password": password,
       });
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         return LoginData.fromJson(jsonDecode(response.body));
       } else {
-        throw ServerExceptions();
+        final errMessage =
+            jsonDecode(response.body)['message'] ?? "Error occured!!";
+        throw DataExceptions(message: errMessage);
       }
-    } catch (_) {
-      throw ServerExceptions();
+    } catch (err) {
+      switch (err) {
+        case DataExceptions():
+          throw DataExceptions(message: err.message);
+        default:
+          throw const ServerExceptions(message: "Error occured!!");
+      }
     }
   }
 
@@ -40,10 +48,17 @@ class AuthDataSource {
         final body = jsonDecode(response.body);
         return body['error'];
       } else {
-        throw ServerExceptions();
+        final errMessage =
+            jsonDecode(response.body)['message'] ?? "Error occured!!";
+        throw DataExceptions(message: errMessage);
       }
-    } catch (_) {
-      throw ServerExceptions();
+    } catch (err) {
+      switch (err) {
+        case DataExceptions():
+          throw DataExceptions(message: err.message);
+        default:
+          throw const ServerExceptions(message: "Error occured!!");
+      }
     }
   }
 }

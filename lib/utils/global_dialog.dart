@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:story_app/constant/color.dart';
 
@@ -20,7 +21,7 @@ class GlobalDialog {
               mainWidgetDialog: AlertDialogButtonComponent(
                   buttonTitle: 'Kembali',
                   onPressed: () {
-                    Navigator.pop(context);
+                    context.pop();
                   }),
               titleColor: const Color.fromARGB(255, 163, 25, 15),
             ),

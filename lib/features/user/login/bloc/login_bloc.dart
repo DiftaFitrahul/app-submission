@@ -22,7 +22,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           email: event.email, password: event.password);
 
       loginDataRepository.fold((err) {
-        emit(state.copyWith(stateStatus: LoginStateStatus.failure));
+        emit(state.copyWith(
+            stateStatus: LoginStateStatus.failure, message: err.message));
       }, (loginData) {
         emit(state.copyWith(
             loginData: loginData, stateStatus: LoginStateStatus.success));

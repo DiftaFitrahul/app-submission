@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:story_app/features/user/shared/data/data_source/auth_data_source.dart';
 import 'package:story_app/features/user/shared/data/data_source/local_data.dart';
 import 'package:story_app/features/user/shared/data/model/login_data.dart';
@@ -37,8 +39,10 @@ class AuthRepositoryImp extends AuthRepository {
           userId: loginDataSource.loginResult.userId,
           token: loginDataSource.loginResult.token);
       return Right(loginDataSource);
+    } on DataExceptions catch (err) {
+      return Left(ServerFailure(message: err.message ?? "Error Occured!!"));
     } on ServerExceptions {
-      return Left(ServerFailure(message: "Login Error"));
+      return Left(ServerFailure(message: "Error Occured!!"));
     }
   }
 
@@ -52,6 +56,8 @@ class AuthRepositoryImp extends AuthRepository {
           name: name, email: email, password: password);
       if (!registerData) return Left(ServerFailure(message: "Register Error"));
       return Right(registerData);
+    } on DataExceptions catch (err) {
+      return Left(ServerFailure(message: err.message ?? "Error Occured!!"));
     } on ServerExceptions {
       return Left(ServerFailure(message: "Register Error"));
     }

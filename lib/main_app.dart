@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:story_app/features/story/bloc/story_bloc.dart';
 import 'package:story_app/features/story/data/repository/story_repository.dart';
 import 'package:story_app/features/user/auth/bloc/auth_bloc.dart';
+import 'package:story_app/features/user/login/bloc/login_bloc.dart';
+import 'package:story_app/features/user/register/bloc/register_bloc.dart';
 import 'package:story_app/features/user/shared/data/repository/auth_repository.dart';
 import 'package:story_app/routes/routes.dart';
 
@@ -13,25 +16,28 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
+    return MultiBlocProvider(
         providers: [
-          RepositoryProvider<AuthRepository>(
-            create: (context) => authRepository,
+          BlocProvider<AuthBloc>(
+            create: (context) =>
+                AuthBloc(authRepository: authRepository)..add(AuthChecked()),
           ),
-          RepositoryProvider<StoryRepository>(
-            create: (context) => storyRepository,
+          BlocProvider<StoryBloc>(
+            create: (context) => StoryBloc(storyRepository: storyRepository),
+          ),
+          BlocProvider<LoginBloc>(
+            create: (context) => LoginBloc(authRepository: authRepository),
+          ),
+          BlocProvider<RegisterBloc>(
+            create: (context) => RegisterBloc(authRepository: authRepository),
           ),
         ],
-        child: BlocProvider<AuthBloc>(
-          create: (context) =>
-              AuthBloc(authRepository: authRepository)..add(AuthChecked()),
-          child: MaterialApp.router(
-            routerConfig: AppRouter.routerConfig(),
-            title: "Story App",
-            theme: ThemeData(
-              useMaterial3: true,
-              scaffoldBackgroundColor: const Color.fromARGB(255, 248, 248, 255),
-            ),
+        child: MaterialApp.router(
+          routerConfig: AppRouter.routerConfig(),
+          title: "Story App",
+          theme: ThemeData(
+            useMaterial3: true,
+            scaffoldBackgroundColor: const Color.fromARGB(255, 248, 248, 255),
           ),
         ));
   }
