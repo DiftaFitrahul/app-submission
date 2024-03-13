@@ -24,6 +24,7 @@ dependencies:
   json_annotation: ^4.8.1
   envied: ^0.5.3
   shimmer: ^3.0.0
+  image: ^4.1.7
 
 dev_dependencies:
   flutter_test:
