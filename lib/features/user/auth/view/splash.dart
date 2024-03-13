@@ -19,9 +19,9 @@ class _SplashScreenState extends State<SplashScreen> {
         listener: (context, state) {
           switch (state.userCurrentState) {
             case UserCurrentState.unauthenticated:
-              context.pushNamed(AppRouteConstants.loginRoute);
+              context.pushReplacementNamed(AppRouteConstants.loginRoute);
             case UserCurrentState.authenticated:
-              context.pushNamed(AppRouteConstants.homeRoute);
+              context.pushReplacementNamed(AppRouteConstants.homeRoute);
           }
         },
         child: const Center(

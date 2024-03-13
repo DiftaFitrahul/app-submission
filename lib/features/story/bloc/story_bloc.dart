@@ -34,7 +34,9 @@ class StoryBloc extends Bloc<StoryEvent, StoryState> {
       });
     } catch (_) {
       emit(state.copyWith(
-          stateStatus: StoryStateStatus.failure, message: "Error occured!!"));
+          allStoryData: const AllStoryData(),
+          stateStatus: StoryStateStatus.failure,
+          message: "Error occured!!"));
     }
   }
 
