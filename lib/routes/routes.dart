@@ -9,7 +9,7 @@ import 'package:story_app/routes/routes_name.dart';
 
 class AppRouter {
   static RouterConfig<Object>? routerConfig() {
-    return GoRouter(routes: [
+    return GoRouter(initialLocation: AppRouteConstants.loginRoute, routes: [
       GoRoute(
         path: AppRouteConstants.splashRoute,
         builder: (_, __) => const SplashScreen(),

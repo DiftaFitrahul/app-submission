@@ -4,7 +4,7 @@ import 'package:story_app/features/story/data/model/all_story_data.dart';
 import 'package:story_app/features/story/data/model/detail_story_data.dart';
 import 'package:story_app/features/user/shared/data/data_source/local_data.dart';
 
-import '../../../../utils/failure.dart';
+import '../../../../network/failure.dart';
 
 abstract class StoryRepository {
   final StoryDataSource _storyDataSource;

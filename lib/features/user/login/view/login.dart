@@ -6,6 +6,7 @@ import 'package:story_app/constant/color.dart';
 import 'package:story_app/features/user/register/view/register.dart';
 import 'package:story_app/features/user/shared/view/auth_button.dart';
 import 'package:story_app/features/user/shared/view/auth_field.dart';
+import 'package:story_app/utils/global_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -97,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 AuthButton(
                   title: "Login",
                   onPressed: () {
-                    if (!_formKey.currentState!.validate()) return;
+                    // if (!_formKey.currentState!.validate()) return;
                   },
                 ),
                 _dontHaveAnAccount(onTap: () {

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:story_app/features/user/shared/data/model/login_data.dart';
 import 'package:story_app/utils/env.dart';
-import 'package:story_app/utils/exceptions.dart';
+import 'package:story_app/network/exceptions.dart';
 
 class AuthDataSource {
   const AuthDataSource();

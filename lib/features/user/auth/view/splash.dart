@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:story_app/features/user/auth/bloc/auth_bloc.dart';
 import 'package:story_app/routes/routes_name.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,18 +13,20 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  void didChangeDependencies() async {
-    Future.delayed(const Duration(seconds: 2)).then((_) {
-      if (mounted) context.push(AppRouteConstants.loginRoute);
-    });
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Icon(Icons.star),
+    return Scaffold(
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          switch (state.userCurrentState) {
+            case UserCurrentState.unauthenticated:
+              context.pushNamed(AppRouteConstants.loginRoute);
+            case UserCurrentState.authenticated:
+              context.pushNamed(AppRouteConstants.homeRoute);
+          }
+        },
+        child: const Center(
+          child: Icon(Icons.star),
+        ),
       ),
     );
   }

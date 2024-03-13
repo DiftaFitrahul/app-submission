@@ -23,7 +23,8 @@ class MainApp extends StatelessWidget {
           ),
         ],
         child: BlocProvider<AuthBloc>(
-          create: (context) => AuthBloc(authRepository: authRepository),
+          create: (context) =>
+              AuthBloc(authRepository: authRepository)..add(AuthChecked()),
           child: MaterialApp.router(
             routerConfig: AppRouter.routerConfig(),
             title: "Story App",
