@@ -1,7 +1,10 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:story_app/features/story/bloc/story_bloc.dart';
 import 'package:story_app/features/story/view/detail_story.dart';
 import 'package:story_app/features/story/view/home_story.dart';
+import 'package:story_app/features/story/view/post_story.dart';
 import 'package:story_app/features/user/login/view/login.dart';
 import 'package:story_app/features/user/register/view/register.dart';
 import 'package:story_app/features/user/auth/view/splash.dart';
@@ -30,9 +33,18 @@ class AppRouter {
         builder: (context, state) => const HomeScreen(),
       ),
       GoRoute(
+        name: AppRouteConstants.postStoryRoute,
+        path: AppRouteConstants.postStoryRoute,
+        builder: (context, state) => const PostStory(),
+      ),
+      GoRoute(
         name: AppRouteConstants.detailStoryRoute,
-        path: AppRouteConstants.detailStoryRoute,
-        builder: (context, state) => const DetailStoryScreen(),
+        path: "${AppRouteConstants.detailStoryRoute}/:id",
+        builder: (context, state) {
+          final id = state.pathParameters['id'];
+          context.read<StoryBloc>().add(StoryDetailFetched(id: id ?? ""));
+          return const DetailStoryScreen();
+        },
       ),
     ]);
   }

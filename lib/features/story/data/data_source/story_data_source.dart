@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:story_app/features/story/data/model/all_story_data.dart';
@@ -38,10 +39,10 @@ class StoryDataSource {
       if (statusCode == 200 || statusCode == 201) {
         return jsonDecode(responseBody)['error'];
       } else {
-        throw ServerExceptions();
+        throw const ServerExceptions();
       }
     } catch (_) {
-      throw ServerExceptions();
+      throw const ServerExceptions();
     }
   }
 
@@ -53,10 +54,10 @@ class StoryDataSource {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return AllStoryData.fromJson(jsonDecode(response.body));
       } else {
-        throw ServerExceptions();
+        throw const ServerExceptions();
       }
     } catch (_) {
-      throw ServerExceptions();
+      throw const ServerExceptions();
     }
   }
 
@@ -69,10 +70,11 @@ class StoryDataSource {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return DetailStoryData.fromJson(jsonDecode(response.body));
       } else {
-        throw ServerExceptions();
+        throw const ServerExceptions();
       }
-    } catch (_) {
-      throw ServerExceptions();
+    } catch (err) {
+      log(err.toString());
+      throw const ServerExceptions();
     }
   }
 }

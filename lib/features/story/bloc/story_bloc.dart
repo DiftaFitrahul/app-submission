@@ -43,25 +43,28 @@ class StoryBloc extends Bloc<StoryEvent, StoryState> {
   void _onStoryDetailFetched(
       StoryDetailFetched event, Emitter<StoryState> emit) async {
     try {
-      emit(state.copyWith(stateStatus: StoryStateStatus.loading));
+      emit(state.copyWith(stateDetailStatus: DetailStoryStateStatus.loading));
       final result = await _storyRepository.getDetailStory(id: event.id);
       result.fold((failure) {
         emit(state.copyWith(
-            stateStatus: StoryStateStatus.failure, message: "Error occured!!"));
+            stateDetailStatus: DetailStoryStateStatus.failure,
+            message: "Error occured!!"));
       }, (detailStoryData) {
         emit(state.copyWith(
             detailStoryData: detailStoryData,
-            stateStatus: StoryStateStatus.success));
+            stateDetailStatus: DetailStoryStateStatus.success));
       });
     } catch (_) {
       emit(state.copyWith(
-          stateStatus: StoryStateStatus.failure, message: "Error occured!!"));
+          detailStoryData: const DetailStoryData(),
+          stateDetailStatus: DetailStoryStateStatus.failure,
+          message: "Error occured!!"));
     }
   }
 
   void _onStoryPosted(StoryPosted event, Emitter<StoryState> emit) async {
     try {
-      emit(state.copyWith(stateStatus: StoryStateStatus.loading));
+      emit(state.copyWith(statePostStatus: PostStoryStateStatus.loading));
       final imageBytes = await compressImage(file: event.imageFile);
       final result = await _storyRepository.addStory(
           description: event.description,
@@ -69,13 +72,15 @@ class StoryBloc extends Bloc<StoryEvent, StoryState> {
           imageBytes: imageBytes);
       result.fold((failure) {
         emit(state.copyWith(
-            stateStatus: StoryStateStatus.failure, message: "Error occured!!"));
+            statePostStatus: PostStoryStateStatus.failure,
+            message: "Error occured!!"));
       }, (addStoryData) {
-        emit(state.copyWith(stateStatus: StoryStateStatus.success));
+        emit(state.copyWith(statePostStatus: PostStoryStateStatus.success));
       });
     } catch (_) {
       emit(state.copyWith(
-          stateStatus: StoryStateStatus.failure, message: "Error occured!!"));
+          statePostStatus: PostStoryStateStatus.failure,
+          message: "Error occured!!"));
     }
   }
 }

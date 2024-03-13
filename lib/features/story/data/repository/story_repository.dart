@@ -44,7 +44,7 @@ class StoryRepositoryImp extends StoryRepository {
             description: description,
             fileName: fileName,
             imageBytes: imageBytes);
-        if (!addStoryDataResult) {
+        if (addStoryDataResult) {
           return Left(ServerFailure(message: "Error occured!!"));
         }
 
