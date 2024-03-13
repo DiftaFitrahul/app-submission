@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:story_app/routes/routes.dart';
+import 'package:story_app/features/story/data/data_source/story_data_source.dart';
+import 'package:story_app/features/story/data/repository/story_repository.dart';
+import 'package:story_app/features/user/shared/data/data_source/auth_data_source.dart';
+import 'package:story_app/features/user/shared/data/data_source/local_data.dart';
+import 'package:story_app/features/user/shared/data/repository/auth_repository.dart';
+import 'package:story_app/main_app.dart';
 
 void main() {
-  runApp(const MainApp());
-}
+  const authDataSource = AuthDataSource();
+  const localDataSource = LocalDataSource();
+  const storyDataSource = StoryDataSource();
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: AppRouter.routerConfig(),
-      title: "Story App",
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 248, 248, 255),
-      ),
-    );
-  }
+  runApp(const MainApp(
+    authRepository: AuthRepositoryImp(
+        authDataSource: authDataSource, localDataSorce: localDataSource),
+    storyRepository: StoryRepositoryImp(
+        localDataSource: localDataSource, storyDataSource: storyDataSource),
+  ));
 }

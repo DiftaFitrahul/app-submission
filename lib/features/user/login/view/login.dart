@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:story_app/constant/color.dart';
 import 'package:story_app/features/user/register/view/register.dart';
-import 'package:story_app/features/user/shared/view/widget/auth_button.dart';
-import 'package:story_app/features/user/shared/view/widget/auth_field.dart';
+import 'package:story_app/features/user/shared/view/auth_button.dart';
+import 'package:story_app/features/user/shared/view/auth_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

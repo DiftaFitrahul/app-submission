@@ -10,7 +10,7 @@ abstract class AuthRepository {
   final AuthDataSource _authDataSource;
   final LocalDataSource _localDataSorce;
 
-  AuthRepository(
+  const AuthRepository(
       {required AuthDataSource authDataSource,
       required LocalDataSource localDataSorce})
       : _authDataSource = authDataSource,
@@ -20,10 +20,11 @@ abstract class AuthRepository {
       {required String email, required String password});
   Future<Either<Failure, bool>> register(
       {required String name, required String email, required String password});
+  Future<bool> checkUserAuth();
 }
 
 class AuthRepositoryImp extends AuthRepository {
-  AuthRepositoryImp(
+  const AuthRepositoryImp(
       {required super.authDataSource, required super.localDataSorce});
 
   @override
@@ -54,5 +55,12 @@ class AuthRepositoryImp extends AuthRepository {
     } on ServerExceptions {
       return Left(ServerFailure(message: "Register Error"));
     }
+  }
+
+  @override
+  Future<bool> checkUserAuth() async {
+    final userToken = await _localDataSorce.userToken;
+    final isUserAuthenticated = userToken?.isNotEmpty ?? false;
+    return isUserAuthenticated;
   }
 }
