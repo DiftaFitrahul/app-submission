@@ -22,7 +22,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       registerDataRepository.fold((failure) {
         emit(state.copyWith(
             stateStatus: RegisterStateStatus.failure,
-            message: "Error occured!!"));
+            message: failure.message));
       }, (registerData) {
         emit(state.copyWith(
             stateStatus: RegisterStateStatus.success,

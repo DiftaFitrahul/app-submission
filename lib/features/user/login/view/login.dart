@@ -136,11 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   _dontHaveAnAccount(onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RegisterScreen(),
-                        ));
+                    context.pushNamed(AppRouteConstants.registerRoute);
                   })
                 ],
               ),

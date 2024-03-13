@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:story_app/features/user/shared/data/data_source/auth_data_source.dart';
 import 'package:story_app/features/user/shared/data/data_source/local_data.dart';
 import 'package:story_app/features/user/shared/data/model/login_data.dart';
@@ -20,14 +18,22 @@ abstract class AuthRepository {
 
   Future<Either<Failure, LoginData>> login(
       {required String email, required String password});
-  Future<Either<Failure, bool>> register(
+  Future<Either<Failure, String>> register(
       {required String name, required String email, required String password});
+  Future<void> logout();
   Future<bool> checkUserAuth();
 }
 
 class AuthRepositoryImp extends AuthRepository {
   const AuthRepositoryImp(
       {required super.authDataSource, required super.localDataSorce});
+
+  @override
+  Future<bool> checkUserAuth() async {
+    final userToken = await _localDataSorce.userToken;
+    final isUserAuthenticated = userToken?.isNotEmpty ?? false;
+    return isUserAuthenticated;
+  }
 
   @override
   Future<Either<Failure, LoginData>> login(
@@ -47,15 +53,15 @@ class AuthRepositoryImp extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> register(
+  Future<Either<Failure, String>> register(
       {required String name,
       required String email,
       required String password}) async {
     try {
-      final registerData = await _authDataSource.register(
+      final errorResult = await _authDataSource.register(
           name: name, email: email, password: password);
-      if (!registerData) return Left(ServerFailure(message: "Register Error"));
-      return Right(registerData);
+
+      return Right(errorResult);
     } on DataExceptions catch (err) {
       return Left(ServerFailure(message: err.message ?? "Error Occured!!"));
     } on ServerExceptions {
@@ -64,9 +70,7 @@ class AuthRepositoryImp extends AuthRepository {
   }
 
   @override
-  Future<bool> checkUserAuth() async {
-    final userToken = await _localDataSorce.userToken;
-    final isUserAuthenticated = userToken?.isNotEmpty ?? false;
-    return isUserAuthenticated;
+  Future<void> logout() async {
+    _localDataSorce.deleteDataUser();
   }
 }

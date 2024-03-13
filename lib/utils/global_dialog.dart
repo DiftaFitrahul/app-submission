@@ -63,6 +63,7 @@ class GlobalDialog {
       {required BuildContext context,
       required String title,
       required String subtitle,
+      required String buttonTitle,
       required VoidCallback onTap}) {
     showGeneralDialog(
       barrierDismissible: false,
@@ -77,7 +78,7 @@ class GlobalDialog {
               title: title,
               subtitleWidget: SubtitleDialog(subtitle: subtitle),
               mainWidgetDialog: AlertDialogButtonComponent(
-                  buttonTitle: 'Selesai', onPressed: onTap),
+                  buttonTitle: buttonTitle, onPressed: onTap),
               titleColor: const Color(0xff524B6B),
             ),
           ),

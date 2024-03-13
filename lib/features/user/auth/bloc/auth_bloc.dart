@@ -10,6 +10,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         super(const AuthState(
             userCurrentState: UserCurrentState.unauthenticated)) {
     on<AuthChecked>(_onAuthChecked);
+    on<AuthOut>(_onAuthOut);
   }
 
   final AuthRepository _authRepository;
@@ -23,6 +24,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(
             state.copyWith(userCurrentState: UserCurrentState.unauthenticated));
       }
+    } catch (_) {
+      emit(state.copyWith(userCurrentState: UserCurrentState.unauthenticated));
+    }
+  }
+
+  void _onAuthOut(AuthOut event, Emitter<AuthState> emit) async {
+    try {
+      await _authRepository.logout();
+      emit(state.copyWith(userCurrentState: UserCurrentState.unauthenticated));
     } catch (_) {
       emit(state.copyWith(userCurrentState: UserCurrentState.unauthenticated));
     }
