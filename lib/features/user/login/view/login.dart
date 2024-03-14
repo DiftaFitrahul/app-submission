@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:story_app/features/common/widget/dropdown_locale.dart';
 
-import '../../../common/utils/common.dart';
+import '../../../../utils/server_client_failure_msg.dart';
 import '../../../../constant/color.dart';
 import '../../../../routes/routes_name.dart';
 import '../../../../utils/global_dialog.dart';
+import '../../../common/utils/common.dart';
+import '../../../common/widget/dropdown_locale.dart';
 import '../../shared/view/auth_button.dart';
 import '../../shared/view/auth_field.dart';
 import '../bloc/login_bloc.dart';
@@ -58,7 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
             case LoginStateStatus.failure:
               context.pop();
               GlobalDialog.errorDialog(
-                  context: context, subtitle: state.message ?? "Error Occured");
+                  context: context,
+                  subtitle: failureMessage(
+                      context, state.message ?? "Error Occured"));
               break;
             default:
               break;

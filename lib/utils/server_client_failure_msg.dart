@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:story_app/features/common/utils/common.dart';
+
+import '../features/common/utils/common.dart';
 
 String failureMessage(BuildContext context, String message) {
   switch (message) {

@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:story_app/utils/server_client_failure_msg.dart';
 
 import '../../../constant/color.dart';
+import '../../../utils/server_client_failure_msg.dart';
 import '../../../utils/shimmer_effect.dart';
 import '../bloc/story_bloc.dart';
 import '../data/model/story_data.dart';
