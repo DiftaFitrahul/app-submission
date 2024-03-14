@@ -5,6 +5,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/common.dart';
 import '../../../../constant/color.dart';
 import '../../../../routes/routes_name.dart';
 import '../../../../utils/global_dialog.dart';
@@ -74,18 +75,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     const SizedBox(height: 90),
-                    const Text(
-                      "Welcome Back",
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.titlePageLogin,
+                      style: const TextStyle(
                           color: darkBlue,
                           fontSize: 35,
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 7),
-                    const Text(
-                      'Story app is a platform for uploading your story and let your friend know what you are doing now',
+                    Text(
+                      AppLocalizations.of(context)!.subtitlePageAuth,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Color(0xff524B6B),
                       ),
@@ -99,10 +100,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "email is empty";
+                          return AppLocalizations.of(context)!.emailEmpty;
                         }
                         if (!EmailValidator.validate(value)) {
-                          return "email isn't valid";
+                          return AppLocalizations.of(context)!.emailNotValid;
                         }
                         return null;
                       },
@@ -111,9 +112,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         valueListenable: _passwordShowNotifier,
                         builder: (context, isSecure, _) {
                           return AuthField(
-                            label: "Password",
+                            label: AppLocalizations.of(context)!
+                                .labelFieldPassword,
                             controller: _passwordController,
-                            hintText: "password",
+                            hintText: AppLocalizations.of(context)!
+                                .labelFieldPassword,
                             obscureText: isSecure,
                             trailingIcon: IconButton(
                                 onPressed: () {
@@ -124,17 +127,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                     : const Icon(CupertinoIcons.eye)),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return "password is empty";
+                                return AppLocalizations.of(context)!
+                                    .passwordEmpty;
                               }
                               if (value.length < 8) {
-                                return "password at least 8 character";
+                                return AppLocalizations.of(context)!
+                                    .passwordNotLongEnough;
                               }
                               return null;
                             },
                           );
                         }),
                     AuthButton(
-                      title: "Login",
+                      title: AppLocalizations.of(context)!.loginTitle,
                       onPressed: () {
                         if (!_formKey.currentState!.validate()) return;
                         context.read<LoginBloc>().add(LoginSubmitted(
@@ -159,12 +164,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _dontHaveAnAccount({required VoidCallback onTap}) {
     return RichText(
         text: TextSpan(
-            text: 'Anda belum memiliki akun? ',
+            text: AppLocalizations.of(context)!.dontHaveAccount,
             style: const TextStyle(color: Color(0xff524B6B), fontSize: 14),
             children: [
           TextSpan(
             recognizer: TapGestureRecognizer()..onTap = onTap,
-            text: 'Daftar',
+            text: AppLocalizations.of(context)!.registerTitle,
             style: const TextStyle(color: Color(0xffFF9228), fontSize: 14),
           )
         ]));

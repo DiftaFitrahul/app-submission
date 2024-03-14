@@ -5,6 +5,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/common.dart';
 import '../../../../utils/global_dialog.dart';
 import '../../../../constant/color.dart';
 import '../../shared/view/auth_button.dart';
@@ -59,9 +60,9 @@ class _LoginScreenState extends State<RegisterScreen> {
               context.pop();
               GlobalDialog.successDialog(
                 context: context,
-                title: "Success!!",
-                subtitle: "please login after register",
-                buttonTitle: "Selesai",
+                title: AppLocalizations.of(context)!.titleSuccessDialog,
+                subtitle: AppLocalizations.of(context)!.subtitleSuccessDialog,
+                buttonTitle: AppLocalizations.of(context)!.buttonSuccessDialog,
                 onTap: () {
                   context.pop();
                   context.pop();
@@ -88,27 +89,28 @@ class _LoginScreenState extends State<RegisterScreen> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     const SizedBox(height: 90),
-                    const Text(
-                      "Create an Account",
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.titlePageRegister,
+                      style: const TextStyle(
                           color: darkBlue,
                           fontSize: 35,
                           fontWeight: FontWeight.bold),
                     ),
-                    const Text(
-                      'Story app is a platform for uploading your story and let your friend know what you are doing now',
+                    Text(
+                      AppLocalizations.of(context)!.subtitlePageAuth,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12, color: Color(0xff524B6B)),
+                      style: const TextStyle(
+                          fontSize: 12, color: Color(0xff524B6B)),
                     ),
                     AuthField(
-                      label: "Full name",
+                      label: AppLocalizations.of(context)!.labelFieldFullname,
                       controller: _fullNameController,
                       hintText: "Brandone louis ",
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "name is empty";
+                          return AppLocalizations.of(context)!.nameEmpty;
                         }
 
                         return null;
@@ -122,10 +124,10 @@ class _LoginScreenState extends State<RegisterScreen> {
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "email is empty";
+                          return AppLocalizations.of(context)!.emailEmpty;
                         }
                         if (!EmailValidator.validate(value)) {
-                          return "email isn't valid";
+                          return AppLocalizations.of(context)!.emailNotValid;
                         }
                         return null;
                       },
@@ -134,9 +136,11 @@ class _LoginScreenState extends State<RegisterScreen> {
                         valueListenable: _passwordShowNotifier,
                         builder: (context, isSecure, _) {
                           return AuthField(
-                            label: "Password",
+                            label: AppLocalizations.of(context)!
+                                .labelFieldPassword,
                             controller: _passwordController,
-                            hintText: "password",
+                            hintText: AppLocalizations.of(context)!
+                                .labelFieldPassword,
                             obscureText: isSecure,
                             textInputAction: TextInputAction.next,
                             trailingIcon: IconButton(
@@ -148,10 +152,12 @@ class _LoginScreenState extends State<RegisterScreen> {
                                     : const Icon(CupertinoIcons.eye)),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return "password is empty";
+                                return AppLocalizations.of(context)!
+                                    .passwordEmpty;
                               }
                               if (value.length < 8) {
-                                return "password at least 8 character";
+                                return AppLocalizations.of(context)!
+                                    .passwordNotLongEnough;
                               }
                               return null;
                             },
@@ -161,9 +167,11 @@ class _LoginScreenState extends State<RegisterScreen> {
                         valueListenable: _confirmPasswordShowNotifier,
                         builder: (context, isSecure, _) {
                           return AuthField(
-                            label: "Confirm Password",
+                            label: AppLocalizations.of(context)!
+                                .labelFieldConfirmPassword,
                             controller: _confirmPasswordController,
-                            hintText: "confirm password",
+                            hintText: AppLocalizations.of(context)!
+                                .labelFieldConfirmPassword,
                             obscureText: isSecure,
                             trailingIcon: IconButton(
                                 onPressed: () {
@@ -175,20 +183,23 @@ class _LoginScreenState extends State<RegisterScreen> {
                                     : const Icon(CupertinoIcons.eye)),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return "password is empty";
+                                return AppLocalizations.of(context)!
+                                    .passwordEmpty;
                               }
                               if (value.length < 8) {
-                                return "password at least 8 character";
+                                return AppLocalizations.of(context)!
+                                    .passwordNotLongEnough;
                               }
                               if (value != _passwordController.text) {
-                                return "password isn't same";
+                                return AppLocalizations.of(context)!
+                                    .passwordNotSame;
                               }
                               return null;
                             },
                           );
                         }),
                     AuthButton(
-                      title: "Register",
+                      title: AppLocalizations.of(context)!.registerTitle,
                       onPressed: () {
                         if (!_formKey.currentState!.validate()) return;
                         context.read<RegisterBloc>().add(RegisterSubmitted(
@@ -213,12 +224,12 @@ class _LoginScreenState extends State<RegisterScreen> {
   Widget _dontHaveAnAccount({required VoidCallback onTap}) {
     return RichText(
         text: TextSpan(
-            text: 'Anda sudah memiliki akun? ',
+            text: AppLocalizations.of(context)!.haveAccount,
             style: const TextStyle(color: Color(0xff524B6B), fontSize: 14),
             children: [
           TextSpan(
             recognizer: TapGestureRecognizer()..onTap = onTap,
-            text: 'Login',
+            text: AppLocalizations.of(context)!.loginTitle,
             style: const TextStyle(color: Color(0xffFF9228), fontSize: 14),
           )
         ]));

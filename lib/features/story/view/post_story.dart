@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../utils/common.dart';
 import '../../../constant/color.dart';
 import '../../../utils/global_dialog.dart';
 import '../bloc/story_bloc.dart';
@@ -44,11 +45,11 @@ class _PostStoryState extends State<PostStory> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: Text(
-                'Tambahkan Foto Profil',
-                style: TextStyle(
+                AppLocalizations.of(context)!.titleAddPhotoStory,
+                style: const TextStyle(
                   color: Color(0xff524B6B),
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -56,7 +57,7 @@ class _PostStoryState extends State<PostStory> {
               ),
             ),
             _bottomSheetComp(
-              title: 'Buka Galeri',
+              title: AppLocalizations.of(context)!.openGallery,
               icon: Icons.photo,
               onTap: () async {
                 Navigator.pop(ctx);
@@ -74,7 +75,7 @@ class _PostStoryState extends State<PostStory> {
               height: 17,
             ),
             _bottomSheetComp(
-              title: 'Buka Kamera',
+              title: AppLocalizations.of(context)!.openCamera,
               icon: Icons.camera_alt_rounded,
               onTap: () async {
                 Navigator.pop(ctx);
@@ -101,10 +102,10 @@ class _PostStoryState extends State<PostStory> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 248, 248, 255),
-        title: const Center(
+        title: Center(
           child: Text(
-            "Post Story",
-            style: TextStyle(
+            AppLocalizations.of(context)!.titleAddPhotoStory,
+            style: const TextStyle(
               fontSize: 35,
               fontWeight: FontWeight.w600,
             ),
@@ -123,9 +124,10 @@ class _PostStoryState extends State<PostStory> {
               context.pop();
               GlobalDialog.successDialog(
                 context: context,
-                title: "Success!!",
-                subtitle: "Success Post Story",
-                buttonTitle: "Finish",
+                title: AppLocalizations.of(context)!.titleSuccessDialog,
+                subtitle:
+                    AppLocalizations.of(context)!.subtitleSuccessPostStory,
+                buttonTitle: AppLocalizations.of(context)!.buttonSuccessDialog,
                 onTap: () {
                   context.pop();
                   context.pop();
@@ -146,7 +148,7 @@ class _PostStoryState extends State<PostStory> {
             validateImage: validateImage,
             validateDescription: validateDescription,
             imagePath: imageFile.path,
-            multilineTitle: "Description",
+            multilineTitle: AppLocalizations.of(context)!.labelFieldDescription,
             multilineTextEditingController: _descriptionController,
             iconImagePressed: () {
               _showBottomSheetFotoStory(context: context);
@@ -218,7 +220,7 @@ class _PostStoryState extends State<PostStory> {
             height: 15,
           ),
           _uploadFotoStory(
-              title: 'Photo Story',
+              title: AppLocalizations.of(context)!.labelFieldPhotoStory,
               validate: validateImage,
               uploadImageSucces: imagePath.isNotEmpty,
               iconImagePressed: iconImagePressed),
@@ -239,9 +241,9 @@ class _PostStoryState extends State<PostStory> {
                 ),
               ),
               onPressed: onPost,
-              child: const Text(
-                'Post Story',
-                style: TextStyle(color: Colors.white),
+              child: Text(
+                AppLocalizations.of(context)!.labelPostStory,
+                style: const TextStyle(color: Colors.white),
               ))
         ],
       ),
@@ -329,7 +331,9 @@ class _PostStoryState extends State<PostStory> {
                           color: Color.fromARGB(255, 163, 25, 15),
                         ),
                       ),
-                errorText: validate ? null : "Mohon deskripsi diisi"),
+                errorText: validate
+                    ? null
+                    : AppLocalizations.of(context)!.descriptionError),
           )
         ],
       ),
@@ -405,14 +409,14 @@ class _PostStoryState extends State<PostStory> {
             ],
           ),
           if (validate == false)
-            const Padding(
-              padding: EdgeInsets.symmetric(
+            Padding(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 12.0,
                 vertical: 5,
               ),
               child: Text(
-                'Mohon upload foto profil',
-                style: TextStyle(
+                AppLocalizations.of(context)!.addPhotoError,
+                style: const TextStyle(
                   color: Color.fromARGB(255, 163, 25, 15),
                   fontWeight: FontWeight.normal,
                   fontSize: 12,

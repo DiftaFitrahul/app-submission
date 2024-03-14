@@ -13,7 +13,7 @@ import './routes_name.dart';
 
 class AppRouter {
   static RouterConfig<Object>? routerConfig() {
-    return GoRouter(initialLocation: AppRouteConstants.postStoryRoute, routes: [
+    return GoRouter(initialLocation: AppRouteConstants.splashRoute, routes: [
       GoRoute(
         path: AppRouteConstants.splashRoute,
         builder: (_, __) => const SplashScreen(),

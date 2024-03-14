@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../constant/color.dart';
+import './common.dart';
 
 class GlobalDialog {
   static void errorDialog(
@@ -44,7 +45,7 @@ class GlobalDialog {
           child: FadeTransition(
             opacity: Tween<double>(begin: 0.5, end: 1.0).animate(a1),
             child: AlertDialogComponent(
-              title: 'Memproses Data',
+              title: AppLocalizations.of(context)!.loadingDialogTitle,
               mainWidgetDialog: Center(
                 child: LoadingAnimationWidget.prograssiveDots(
                   color: darkBlue,
