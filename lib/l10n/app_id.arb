@@ -24,8 +24,8 @@
     "passwordNotLongEnough" : "kata sandi paling tidak 8 karakter",
     "passwordNotSame" : "kata sandi tidak sama",
     "titleAddPhotoStory" :"Tambah Foto Story",
-    "openGallery" : "Buka galeri",
-    "openCamera" : "Buka kamera",
+    "openGallery" : "Buka Galeri",
+    "openCamera" : "Buka Camera",
     "subtitleSuccessPostStory" : "Berhasil memposting story",
     "addPhotoError" : "mohon unggah foto story",
     "descriptionError" : "mohon isi deskripsi",
@@ -35,6 +35,9 @@
     "noInternet" : "Tidak ada koneksi internet!!",
     "connectionError" : "Koneksi error!!",
     "errorOccured" : "Terjadi kesalahan!!",
-    "errorTitle" : "Kesalahan",
-    "errorButton" : "Kembali"
+    "errorTitle" : "Kesalahan!!",
+    "errorButton" : "Kembali",
+    "userNotFound" : "Pengguna tidak ditemukan",
+    "passwordInvalid" : "Kata sandi salah",
+    "emailAlreadyTaken" : "Email sudah pernah terdaftar" 
 }

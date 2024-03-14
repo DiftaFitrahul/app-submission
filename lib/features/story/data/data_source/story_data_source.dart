@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import '../../../../utils/env.dart';
@@ -77,7 +76,6 @@ class StoryDataSource {
 
       throw ClientExceptions(message: msg);
     } catch (err) {
-      log("ini di call");
       throw ServerExceptions(message: err.toString());
     }
   }
@@ -101,10 +99,8 @@ class StoryDataSource {
       } else {
         msg = "Connection error";
       }
-
       throw ClientExceptions(message: msg);
     } catch (err) {
-      log(err.toString());
       throw const ServerExceptions();
     }
   }

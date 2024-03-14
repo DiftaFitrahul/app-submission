@@ -5,6 +5,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/server_client_failure_msg.dart';
 import '../../../common/utils/common.dart';
 import '../../../../utils/global_dialog.dart';
 import '../../../../constant/color.dart';
@@ -73,7 +74,8 @@ class _LoginScreenState extends State<RegisterScreen> {
             case RegisterStateStatus.failure:
               context.pop();
               GlobalDialog.errorDialog(
-                  context: context, subtitle: state.message);
+                  context: context,
+                  subtitle: failureMessage(context, state.message));
               break;
             default:
               break;

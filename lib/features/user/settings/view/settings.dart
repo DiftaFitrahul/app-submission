@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:story_app/routes/routes_name.dart';
@@ -74,10 +72,10 @@ class SettingsScreen extends StatelessWidget {
 
   Widget _logoutSetting(BuildContext context, {required VoidCallback onTap}) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
         children: [
           const Icon(
             Icons.logout,

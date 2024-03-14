@@ -45,6 +45,8 @@ class AuthRepositoryImp extends AuthRepository {
           userId: loginDataSource.loginResult.userId,
           token: loginDataSource.loginResult.token);
       return Right(loginDataSource);
+    } on ClientExceptions catch (err) {
+      return Left(ClientFailure(message: err.message ?? "Error occured!!"));
     } on DataExceptions catch (err) {
       return Left(ServerFailure(message: err.message ?? "Error Occured!!"));
     } on ServerExceptions {
@@ -62,6 +64,8 @@ class AuthRepositoryImp extends AuthRepository {
           name: name, email: email, password: password);
 
       return Right(errorResult);
+    } on ClientExceptions catch (err) {
+      return Left(ClientFailure(message: err.message ?? "Error occured!!"));
     } on DataExceptions catch (err) {
       return Left(ServerFailure(message: err.message ?? "Error Occured!!"));
     } on ServerExceptions {

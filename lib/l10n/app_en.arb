@@ -24,8 +24,8 @@
     "passwordNotLongEnough" : "password at least 8 character",
     "passwordNotSame" : "password isn't same",
     "titleAddPhotoStory" :"Add Photo Story",
-    "openGallery" : "Open gallery",
-    "openCamera" : "Open camera",
+    "openGallery" : "Open Gallery",
+    "openCamera" : "Open Camera",
     "subtitleSuccessPostStory" : "Success post story",
     "addPhotoError" : "Please upload photo story",
     "descriptionError" : "Please fill description",
@@ -35,7 +35,10 @@
     "noInternet" : "No internet connection!!",
     "connectionError" : "Connection error!!",
     "errorOccured" : "Error occured!!",
-    "errorTitle" : "Error",
-    "errorButton" : "Back"
+    "errorTitle" : "Error!!",
+    "errorButton" : "Back",
+    "userNotFound" : "User not found",
+    "passwordInvalid" : "Invalid password",
+    "emailAlreadyTaken" : "Email is already taken" 
 
 }

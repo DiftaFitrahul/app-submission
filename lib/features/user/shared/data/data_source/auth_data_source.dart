@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 
@@ -25,6 +24,15 @@ class AuthDataSource {
             jsonDecode(response.body)['message'] ?? "Error occured!!";
         throw DataExceptions(message: errMessage);
       }
+    } on http.ClientException catch (err) {
+      String msg = "";
+      if (err.toString().contains(
+          "ClientException with SocketException: Failed host lookup")) {
+        msg = "No internet";
+      } else {
+        msg = "Connection error";
+      }
+      throw ClientExceptions(message: msg);
     } catch (err) {
       switch (err) {
         case DataExceptions():
@@ -46,23 +54,28 @@ class AuthDataSource {
         "email": email,
         "password": password,
       });
-      log(response.statusCode.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         final body = jsonDecode(response.body);
         return body['message'];
       } else {
-        log("ini dijalankan 4");
         final errMessage =
             jsonDecode(response.body)['message'] ?? "Error occured!!";
         throw DataExceptions(message: errMessage);
       }
+    } on http.ClientException catch (err) {
+      String msg = "";
+      if (err.toString().contains(
+          "ClientException with SocketException: Failed host lookup")) {
+        msg = "No internet";
+      } else {
+        msg = "Connection error";
+      }
+      throw ClientExceptions(message: msg);
     } catch (err) {
-      log("ini dijankan 1");
       switch (err) {
         case DataExceptions():
           throw DataExceptions(message: err.message);
         default:
-          log(err.toString());
           throw const ServerExceptions(message: "Error occured!!");
       }
     }

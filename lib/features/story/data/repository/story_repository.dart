@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 
+import '../../../../network/exceptions.dart';
 import '../../../../network/failure.dart';
 import '../../../user/shared/data/data_source/local_data.dart';
 import '../data_source/story_data_source.dart';
@@ -54,8 +55,8 @@ class StoryRepositoryImp extends StoryRepository {
       }
     } catch (err) {
       switch (err) {
-        case ClientFailure():
-          return Left(ClientFailure(message: err.message));
+        case ClientExceptions():
+          return Left(ClientFailure(message: err.message ?? "Error occured!!"));
         default:
           return Left(ServerFailure(message: "Error occured!!"));
       }
@@ -73,13 +74,10 @@ class StoryRepositoryImp extends StoryRepository {
       } else {
         return Left(ServerFailure(message: "Error occured!!"));
       }
+    } on ClientExceptions catch (err) {
+      return Left(ClientFailure(message: err.message ?? "Error occured!!"));
     } catch (err) {
-      switch (err) {
-        case ClientFailure():
-          return Left(ClientFailure(message: err.message));
-        default:
-          return Left(ServerFailure(message: "Error occured!!"));
-      }
+      return Left(ServerFailure(message: "Error occured!!"));
     }
   }
 
@@ -95,13 +93,10 @@ class StoryRepositoryImp extends StoryRepository {
       } else {
         return Left(ServerFailure(message: "Error occured!!"));
       }
+    } on ClientExceptions catch (err) {
+      return Left(ClientFailure(message: err.message ?? "Error occured!!"));
     } catch (err) {
-      switch (err) {
-        case ClientFailure():
-          return Left(ClientFailure(message: err.message));
-        default:
-          return Left(ServerFailure(message: "Error occured!!"));
-      }
+      return Left(ServerFailure(message: "Error occured!!"));
     }
   }
 }
