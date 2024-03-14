@@ -7,6 +7,7 @@ import '../features/story/view/detail_story.dart';
 import '../features/story/view/home_story.dart';
 import '../features/story/view/post_story.dart';
 import '../features/user/login/view/login.dart';
+import '../features/user/settings/view/settings.dart';
 import '../features/user/register/view/register.dart';
 import '../features/user/auth/view/splash.dart';
 import './routes_name.dart';
@@ -15,6 +16,7 @@ class AppRouter {
   static RouterConfig<Object>? routerConfig() {
     return GoRouter(initialLocation: AppRouteConstants.splashRoute, routes: [
       GoRoute(
+        name: AppRouteConstants.splashRoute,
         path: AppRouteConstants.splashRoute,
         builder: (_, __) => const SplashScreen(),
       ),
@@ -32,6 +34,11 @@ class AppRouter {
         name: AppRouteConstants.homeRoute,
         path: AppRouteConstants.homeRoute,
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        name: AppRouteConstants.settingsRoute,
+        path: AppRouteConstants.settingsRoute,
+        builder: (context, state) => SettingsScreen(),
       ),
       GoRoute(
         name: AppRouteConstants.postStoryRoute,

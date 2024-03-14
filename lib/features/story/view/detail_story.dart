@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:story_app/utils/server_client_failure_msg.dart';
 
 import '../../../constant/color.dart';
 import '../../../utils/shimmer_effect.dart';
@@ -14,16 +15,16 @@ class DetailStoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 248, 248, 255),
-          title: const Center(
-            child: Text(
-              "Detail Story",
-              style: TextStyle(
-                fontSize: 35,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          )),
+        backgroundColor: const Color.fromARGB(255, 248, 248, 255),
+        title: const Text(
+          "Detail Story",
+          style: TextStyle(
+            fontSize: 35,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           await Future.delayed(const Duration(seconds: 1)).then((_) {
@@ -43,7 +44,7 @@ class DetailStoryScreen extends StatelessWidget {
               case DetailStoryStateStatus.success:
                 return _successWidget(state.detailStoryData.story);
               case DetailStoryStateStatus.failure:
-                return _errorWidget(state.message);
+                return _errorWidget(context, state.message);
             }
           },
         ),
@@ -152,7 +153,7 @@ class DetailStoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _errorWidget(String message) {
+  Widget _errorWidget(BuildContext context, String message) {
     return Stack(
       children: [
         Center(
@@ -164,7 +165,7 @@ class DetailStoryScreen extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              Text(message)
+              Text(failureMessage(context, message))
             ],
           ),
         ),

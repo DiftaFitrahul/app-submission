@@ -27,7 +27,7 @@ class StoryBloc extends Bloc<StoryEvent, StoryState> {
       final result = await _storyRepository.getAllStory();
       result.fold((failure) {
         emit(state.copyWith(
-            stateStatus: StoryStateStatus.failure, message: "Error occured!!"));
+            stateStatus: StoryStateStatus.failure, message: failure.message));
       }, (allStoryData) {
         emit(state.copyWith(
             allStoryData: allStoryData, stateStatus: StoryStateStatus.success));
@@ -48,7 +48,7 @@ class StoryBloc extends Bloc<StoryEvent, StoryState> {
       result.fold((failure) {
         emit(state.copyWith(
             stateDetailStatus: DetailStoryStateStatus.failure,
-            message: "Error occured!!"));
+            message: failure.message));
       }, (detailStoryData) {
         emit(state.copyWith(
             detailStoryData: detailStoryData,
@@ -73,7 +73,7 @@ class StoryBloc extends Bloc<StoryEvent, StoryState> {
       result.fold((failure) {
         emit(state.copyWith(
             statePostStatus: PostStoryStateStatus.failure,
-            message: "Error occured!!"));
+            message: failure.message));
       }, (addStoryData) {
         emit(state.copyWith(statePostStatus: PostStoryStateStatus.success));
       });

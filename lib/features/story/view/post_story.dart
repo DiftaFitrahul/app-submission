@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:story_app/utils/server_client_failure_msg.dart';
 
-import '../../../utils/common.dart';
+import '../../common/utils/common.dart';
 import '../../../constant/color.dart';
 import '../../../utils/global_dialog.dart';
 import '../bloc/story_bloc.dart';
@@ -102,15 +103,14 @@ class _PostStoryState extends State<PostStory> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 248, 248, 255),
-        title: Center(
-          child: Text(
-            AppLocalizations.of(context)!.titleAddPhotoStory,
-            style: const TextStyle(
-              fontSize: 35,
-              fontWeight: FontWeight.w600,
-            ),
+        title: Text(
+          AppLocalizations.of(context)!.titleAddPhotoStory,
+          style: const TextStyle(
+            fontSize: 35,
+            fontWeight: FontWeight.w600,
           ),
         ),
+        centerTitle: true,
       ),
       body: BlocListener<StoryBloc, StoryState>(
         listenWhen: (previous, current) =>
@@ -138,7 +138,8 @@ class _PostStoryState extends State<PostStory> {
             case PostStoryStateStatus.failure:
               context.pop();
               GlobalDialog.errorDialog(
-                  context: context, subtitle: state.message);
+                  context: context,
+                  subtitle: failureMessage(context, state.message));
             default:
               break;
           }

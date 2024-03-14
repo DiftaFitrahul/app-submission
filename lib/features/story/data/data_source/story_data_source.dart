@@ -41,6 +41,16 @@ class StoryDataSource {
       } else {
         throw const ServerExceptions();
       }
+    } on http.ClientException catch (err) {
+      String msg = "";
+      if (err.toString().contains(
+          "ClientException with SocketException: Failed host lookup")) {
+        msg = "No internet";
+      } else {
+        msg = "Connection error";
+      }
+
+      throw ClientExceptions(message: msg);
     } catch (_) {
       throw const ServerExceptions();
     }
@@ -56,8 +66,19 @@ class StoryDataSource {
       } else {
         throw const ServerExceptions();
       }
-    } catch (_) {
-      throw const ServerExceptions();
+    } on http.ClientException catch (err) {
+      String msg = "";
+      if (err.toString().contains(
+          "ClientException with SocketException: Failed host lookup")) {
+        msg = "No internet";
+      } else {
+        msg = "Connection error";
+      }
+
+      throw ClientExceptions(message: msg);
+    } catch (err) {
+      log("ini di call");
+      throw ServerExceptions(message: err.toString());
     }
   }
 
@@ -72,6 +93,16 @@ class StoryDataSource {
       } else {
         throw const ServerExceptions();
       }
+    } on http.ClientException catch (err) {
+      String msg = "";
+      if (err.toString().contains(
+          "ClientException with SocketException: Failed host lookup")) {
+        msg = "No internet";
+      } else {
+        msg = "Connection error";
+      }
+
+      throw ClientExceptions(message: msg);
     } catch (err) {
       log(err.toString());
       throw const ServerExceptions();

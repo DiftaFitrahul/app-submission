@@ -23,11 +23,19 @@
     "passwordEmpty" : "password is empty",
     "passwordNotLongEnough" : "password at least 8 character",
     "passwordNotSame" : "password isn't same",
-    "titleAddPhotoStory" :"Add photo story",
+    "titleAddPhotoStory" :"Add Photo Story",
     "openGallery" : "Open gallery",
     "openCamera" : "Open camera",
     "subtitleSuccessPostStory" : "Success post story",
     "addPhotoError" : "Please upload photo story",
-    "descriptionError" : "Please fill description"
+    "descriptionError" : "Please fill description",
+    "titleSettingsPage" : "Settings",
+    "languageSettings" : "Language",
+    "logout" : "Logout",
+    "noInternet" : "No internet connection!!",
+    "connectionError" : "Connection error!!",
+    "errorOccured" : "Error occured!!",
+    "errorTitle" : "Error",
+    "errorButton" : "Back"
 
 }

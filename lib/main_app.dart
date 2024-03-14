@@ -8,6 +8,8 @@ import 'package:story_app/features/user/login/bloc/login_bloc.dart';
 import 'package:story_app/features/user/register/bloc/register_bloc.dart';
 import 'package:story_app/features/user/shared/data/repository/auth_repository.dart';
 import 'package:story_app/routes/routes.dart';
+import 'package:story_app/features/common/utils/common.dart';
+import 'package:story_app/features/common/cubit/common_cubit.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp(
@@ -17,6 +19,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appRouter = AppRouter.routerConfig();
+
     return MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
@@ -32,15 +36,33 @@ class MainApp extends StatelessWidget {
           BlocProvider<RegisterBloc>(
             create: (context) => RegisterBloc(authRepository: authRepository),
           ),
-        ],
-        child: MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: AppRouter.routerConfig(),
-          title: "Story App",
-          theme: ThemeData(
-            useMaterial3: true,
-            scaffoldBackgroundColor: const Color.fromARGB(255, 248, 248, 255),
+          BlocProvider<CommonCubit>(
+            create: (context) => CommonCubit(),
           ),
-        ));
+        ],
+        child: Builder(builder: (context) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerDelegate: appRouter?.routerDelegate,
+            routeInformationProvider: appRouter?.routeInformationProvider,
+            routeInformationParser: appRouter?.routeInformationParser,
+            title: "Story App",
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('id', ''),
+              Locale('en', ''),
+            ],
+            locale: context.watch<CommonCubit>().state,
+            theme: ThemeData(
+              useMaterial3: true,
+              scaffoldBackgroundColor: const Color.fromARGB(255, 248, 248, 255),
+            ),
+          );
+        }));
   }
 }

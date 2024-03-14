@@ -52,8 +52,13 @@ class StoryRepositoryImp extends StoryRepository {
       } else {
         return Left(ServerFailure(message: "Error occured!!"));
       }
-    } catch (_) {
-      return Left(ServerFailure(message: "Error occured!!"));
+    } catch (err) {
+      switch (err) {
+        case ClientFailure():
+          return Left(ClientFailure(message: err.message));
+        default:
+          return Left(ServerFailure(message: "Error occured!!"));
+      }
     }
   }
 
@@ -68,8 +73,13 @@ class StoryRepositoryImp extends StoryRepository {
       } else {
         return Left(ServerFailure(message: "Error occured!!"));
       }
-    } catch (_) {
-      return Left(ServerFailure(message: "Error occured!!"));
+    } catch (err) {
+      switch (err) {
+        case ClientFailure():
+          return Left(ClientFailure(message: err.message));
+        default:
+          return Left(ServerFailure(message: "Error occured!!"));
+      }
     }
   }
 
@@ -85,8 +95,13 @@ class StoryRepositoryImp extends StoryRepository {
       } else {
         return Left(ServerFailure(message: "Error occured!!"));
       }
-    } catch (_) {
-      return Left(ServerFailure(message: "Error occured!!"));
+    } catch (err) {
+      switch (err) {
+        case ClientFailure():
+          return Left(ClientFailure(message: err.message));
+        default:
+          return Left(ServerFailure(message: "Error occured!!"));
+      }
     }
   }
 }

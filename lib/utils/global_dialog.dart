@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../constant/color.dart';
-import './common.dart';
+import '../features/common/utils/common.dart';
 
 class GlobalDialog {
   static void errorDialog(
@@ -18,10 +18,10 @@ class GlobalDialog {
           child: FadeTransition(
             opacity: Tween<double>(begin: 0.5, end: 1.0).animate(a1),
             child: AlertDialogComponent(
-              title: 'Error!!',
+              title: AppLocalizations.of(context)!.errorTitle,
               subtitleWidget: SubtitleDialog(subtitle: subtitle),
               mainWidgetDialog: AlertDialogButtonComponent(
-                  buttonTitle: 'Kembali',
+                  buttonTitle: AppLocalizations.of(context)!.errorButton,
                   onPressed: () {
                     context.pop();
                   }),

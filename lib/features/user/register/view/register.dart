@@ -5,9 +5,10 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../utils/common.dart';
+import '../../../common/utils/common.dart';
 import '../../../../utils/global_dialog.dart';
 import '../../../../constant/color.dart';
+import '../../../common/widget/dropdown_locale.dart';
 import '../../shared/view/auth_button.dart';
 import '../../shared/view/auth_field.dart';
 import '../bloc/register_bloc.dart';
@@ -88,7 +89,11 @@ class _LoginScreenState extends State<RegisterScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const SizedBox(height: 90),
+                    const SizedBox(height: 50),
+                    Align(
+                        alignment: Alignment.centerRight,
+                        child: DropDownLocale()),
+                    const SizedBox(height: 10),
                     Text(
                       AppLocalizations.of(context)!.titlePageRegister,
                       style: const TextStyle(

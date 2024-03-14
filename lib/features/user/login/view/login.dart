@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:story_app/features/common/widget/dropdown_locale.dart';
 
-import '../../../../utils/common.dart';
+import '../../../common/utils/common.dart';
 import '../../../../constant/color.dart';
 import '../../../../routes/routes_name.dart';
 import '../../../../utils/global_dialog.dart';
@@ -74,9 +75,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const SizedBox(height: 90),
+                    const SizedBox(height: 50),
+                    Align(
+                        alignment: Alignment.centerRight,
+                        child: DropDownLocale()),
+                    const SizedBox(height: 10),
                     Text(
                       AppLocalizations.of(context)!.titlePageLogin,
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
                           color: darkBlue,
                           fontSize: 35,
