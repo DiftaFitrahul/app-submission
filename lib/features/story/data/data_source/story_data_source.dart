@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import 'package:story_app/features/story/data/model/all_story_data.dart';
-import 'package:story_app/features/story/data/model/detail_story_data.dart';
-import 'package:story_app/utils/env.dart';
-import 'package:story_app/network/exceptions.dart';
+import '../../../../utils/env.dart';
+import '../../../../network/exceptions.dart';
+import '../model/all_story_data.dart';
+import '../model/detail_story_data.dart';
 
 class StoryDataSource {
   const StoryDataSource();

@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:story_app/features/story/data/data_source/story_data_source.dart';
-import 'package:story_app/features/story/data/model/all_story_data.dart';
-import 'package:story_app/features/story/data/model/detail_story_data.dart';
-import 'package:story_app/features/user/shared/data/data_source/local_data.dart';
 
 import '../../../../network/failure.dart';
+import '../../../user/shared/data/data_source/local_data.dart';
+import '../data_source/story_data_source.dart';
+import '../model/detail_story_data.dart';
+import '../model/all_story_data.dart';
 
 abstract class StoryRepository {
   final StoryDataSource _storyDataSource;

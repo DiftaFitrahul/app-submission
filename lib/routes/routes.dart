@@ -1,18 +1,19 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:story_app/features/story/bloc/story_bloc.dart';
-import 'package:story_app/features/story/view/detail_story.dart';
-import 'package:story_app/features/story/view/home_story.dart';
-import 'package:story_app/features/story/view/post_story.dart';
-import 'package:story_app/features/user/login/view/login.dart';
-import 'package:story_app/features/user/register/view/register.dart';
-import 'package:story_app/features/user/auth/view/splash.dart';
-import 'package:story_app/routes/routes_name.dart';
+
+import '../features/story/bloc/story_bloc.dart';
+import '../features/story/view/detail_story.dart';
+import '../features/story/view/home_story.dart';
+import '../features/story/view/post_story.dart';
+import '../features/user/login/view/login.dart';
+import '../features/user/register/view/register.dart';
+import '../features/user/auth/view/splash.dart';
+import './routes_name.dart';
 
 class AppRouter {
   static RouterConfig<Object>? routerConfig() {
-    return GoRouter(initialLocation: AppRouteConstants.splashRoute, routes: [
+    return GoRouter(initialLocation: AppRouteConstants.postStoryRoute, routes: [
       GoRoute(
         path: AppRouteConstants.splashRoute,
         builder: (_, __) => const SplashScreen(),
@@ -43,7 +44,9 @@ class AppRouter {
         builder: (context, state) {
           final id = state.pathParameters['id'];
           context.read<StoryBloc>().add(StoryDetailFetched(id: id ?? ""));
-          return const DetailStoryScreen();
+          return DetailStoryScreen(
+            id: id ?? "",
+          );
         },
       ),
     ]);

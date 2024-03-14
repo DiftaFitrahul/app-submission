@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:story_app/features/story/data/model/story_data.dart';
+
+import './story_data.dart';
+
 part 'detail_story_data.freezed.dart';
 part 'detail_story_data.g.dart';
 

@@ -1,10 +1,10 @@
-import 'package:story_app/features/user/shared/data/data_source/auth_data_source.dart';
-import 'package:story_app/features/user/shared/data/data_source/local_data.dart';
-import 'package:story_app/features/user/shared/data/model/login_data.dart';
 import 'package:dartz/dartz.dart';
-import 'package:story_app/network/exceptions.dart';
 
 import '../../../../../network/failure.dart';
+import '../../../../../network/exceptions.dart';
+import '../data_source/auth_data_source.dart';
+import '../data_source/local_data.dart';
+import '../model/login_data.dart';
 
 abstract class AuthRepository {
   final AuthDataSource _authDataSource;

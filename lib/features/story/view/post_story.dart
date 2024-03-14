@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
@@ -6,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:story_app/constant/color.dart';
-import 'package:story_app/features/story/bloc/story_bloc.dart';
-import 'package:story_app/utils/global_dialog.dart';
+
+import '../../../constant/color.dart';
+import '../../../utils/global_dialog.dart';
+import '../bloc/story_bloc.dart';
 
 class PostStory extends StatefulWidget {
   const PostStory({super.key});
@@ -100,8 +100,15 @@ class _PostStoryState extends State<PostStory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 248, 248, 255),
         title: const Center(
-          child: Text("Post Story"),
+          child: Text(
+            "Post Story",
+            style: TextStyle(
+              fontSize: 35,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
       ),
       body: BlocListener<StoryBloc, StoryState>(
@@ -184,8 +191,6 @@ class _PostStoryState extends State<PostStory> {
   }) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: Colors.white),
       child: Column(
         children: [
           DottedBorder(
@@ -275,14 +280,19 @@ class _PostStoryState extends State<PostStory> {
             maxLength: 180,
             controller: controller,
             style: const TextStyle(
-                color: darkBlue, fontWeight: FontWeight.normal, fontSize: 16),
+              color: darkBlue,
+              fontWeight: FontWeight.normal,
+              fontSize: 16,
+            ),
             decoration: InputDecoration(
                 errorStyle: const TextStyle(
                     color: Color.fromARGB(255, 163, 25, 15),
                     fontSize: 14,
                     fontWeight: FontWeight.normal),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 18,
+                ),
                 hintText: 'Text Placeholder',
                 focusedErrorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -361,7 +371,7 @@ class _PostStoryState extends State<PostStory> {
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: const Color.fromARGB(255, 248, 248, 255),
+                      color: const Color.fromARGB(255, 226, 226, 255),
                       border: Border.all(width: 1, color: darkBlue)),
                   child: Text(
                     uploadImageSucces ? "Story-Foto" : 'Text Placeholder',
@@ -422,10 +432,16 @@ class _PostStoryState extends State<PostStory> {
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+        padding: const EdgeInsets.symmetric(
+          vertical: 8,
+          horizontal: 15,
+        ),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(width: 1.6, color: const Color(0xff524B6B))),
+            border: Border.all(
+              width: 1.6,
+              color: const Color(0xff524B6B),
+            )),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

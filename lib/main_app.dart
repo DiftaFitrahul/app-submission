@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:story_app/features/story/bloc/story_bloc.dart';
 import 'package:story_app/features/story/data/repository/story_repository.dart';
 import 'package:story_app/features/user/auth/bloc/auth_bloc.dart';
@@ -33,6 +34,7 @@ class MainApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           routerConfig: AppRouter.routerConfig(),
           title: "Story App",
           theme: ThemeData(

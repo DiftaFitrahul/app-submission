@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'story_data.freezed.dart';
 part 'story_data.g.dart';
 

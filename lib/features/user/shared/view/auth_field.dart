@@ -9,12 +9,14 @@ class AuthField extends StatelessWidget {
       this.obscureText = false,
       this.keyboardType,
       this.trailingIcon,
+      this.textInputAction = TextInputAction.done,
       this.validator});
   final TextEditingController controller;
   final String label;
   final String hintText;
   final bool obscureText;
   final Widget? trailingIcon;
+  final TextInputAction? textInputAction;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
 
@@ -40,6 +42,7 @@ class AuthField extends StatelessWidget {
         TextFormField(
           textAlignVertical: TextAlignVertical.center,
           keyboardType: keyboardType,
+          textInputAction: textInputAction,
           decoration: InputDecoration(
               hintText: hintText,
               fillColor: Colors.white,
@@ -64,7 +67,10 @@ class AuthField extends StatelessWidget {
               ),
               suffixIcon: trailingIcon),
           obscureText: obscureText,
-          style: const TextStyle(color: Color(0xff0D0140), fontSize: 12),
+          style: const TextStyle(
+            color: Color(0xff0D0140),
+            fontSize: 12,
+          ),
           controller: controller,
           onTapOutside: (_) {
             FocusManager.instance.primaryFocus?.unfocus();

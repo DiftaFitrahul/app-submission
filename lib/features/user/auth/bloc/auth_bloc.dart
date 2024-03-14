@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:story_app/features/user/shared/data/repository/auth_repository.dart';
+
+import '../../shared/data/repository/auth_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

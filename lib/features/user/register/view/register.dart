@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:story_app/constant/color.dart';
-import 'package:story_app/features/user/register/bloc/register_bloc.dart';
-import 'package:story_app/features/user/shared/view/auth_button.dart';
-import 'package:story_app/features/user/shared/view/auth_field.dart';
 
 import '../../../../utils/global_dialog.dart';
+import '../../../../constant/color.dart';
+import '../../shared/view/auth_button.dart';
+import '../../shared/view/auth_field.dart';
+import '../bloc/register_bloc.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -87,11 +87,12 @@ class _LoginScreenState extends State<RegisterScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    const SizedBox(height: 90),
                     const Text(
                       "Create an Account",
                       style: TextStyle(
                           color: darkBlue,
-                          fontSize: 30,
+                          fontSize: 35,
                           fontWeight: FontWeight.bold),
                     ),
                     const Text(
@@ -104,6 +105,7 @@ class _LoginScreenState extends State<RegisterScreen> {
                       controller: _fullNameController,
                       hintText: "Brandone louis ",
                       keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "name is empty";
@@ -116,6 +118,7 @@ class _LoginScreenState extends State<RegisterScreen> {
                       label: "Email",
                       controller: _emailController,
                       hintText: "Brandonelouis@gmail.com ",
+                      textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -135,6 +138,7 @@ class _LoginScreenState extends State<RegisterScreen> {
                             controller: _passwordController,
                             hintText: "password",
                             obscureText: isSecure,
+                            textInputAction: TextInputAction.next,
                             trailingIcon: IconButton(
                                 onPressed: () {
                                   _passwordShowNotifier.value = !isSecure;

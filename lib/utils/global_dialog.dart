@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:story_app/constant/color.dart';
+
+import '../constant/color.dart';
 
 class GlobalDialog {
   static void errorDialog(
@@ -109,7 +110,10 @@ class AlertDialogComponent extends StatelessWidget {
           title,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontWeight: FontWeight.w600, fontSize: 20, color: titleColor),
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            color: titleColor,
+          ),
         ),
       ),
       backgroundColor: const Color.fromARGB(255, 248, 248, 255),
@@ -176,7 +180,10 @@ class AlertDialogButtonComponent extends StatelessWidget {
         child: Text(
           buttonTitle,
           style: const TextStyle(
-              fontWeight: FontWeight.w600, fontSize: 16, color: Colors.white),
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+            color: Colors.white,
+          ),
         ),
       ),
     );
