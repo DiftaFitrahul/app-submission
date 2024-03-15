@@ -61,7 +61,7 @@ class _PostStoryState extends State<PostStory> {
               title: AppLocalizations.of(context)!.openGallery,
               icon: Icons.photo,
               onTap: () async {
-                Navigator.pop(ctx);
+                context.pop();
                 final file =
                     await ImagePicker().pickImage(source: ImageSource.gallery);
 
@@ -79,7 +79,7 @@ class _PostStoryState extends State<PostStory> {
               title: AppLocalizations.of(context)!.openCamera,
               icon: Icons.camera_alt_rounded,
               onTap: () async {
-                Navigator.pop(ctx);
+                context.pop();
                 final file =
                     await ImagePicker().pickImage(source: ImageSource.camera);
                 if (file != null) {
