@@ -12,7 +12,7 @@
     "postStoryPageTitle" : "Memposting Story",
     "labelFieldPhotoStory" : "Foto Story",
     "labelFieldDescription" : "Deskripsi",
-    "labelPostStory" : "Memposting Story",
+    "labelPostStory" : "Posting Story",
     "loadingDialogTitle": "Memproses Data",
     "titleSuccessDialog" : "Berhasil",
     "subtitleSuccessDialog" : "Kamu dapat masuk setelah daftar",
@@ -23,9 +23,9 @@
     "passwordEmpty" : "kata sandi kosong",
     "passwordNotLongEnough" : "kata sandi paling tidak 8 karakter",
     "passwordNotSame" : "kata sandi tidak sama",
-    "titleAddPhotoStory" :"Tambah Foto Story",
+    "titleAddPhotoStory" :"Tambah Story",
     "openGallery" : "Buka Galeri",
-    "openCamera" : "Buka Camera",
+    "openCamera" : "Buka Kamera",
     "subtitleSuccessPostStory" : "Berhasil memposting story",
     "addPhotoError" : "mohon unggah foto story",
     "descriptionError" : "mohon isi deskripsi",
@@ -39,5 +39,7 @@
     "errorButton" : "Kembali",
     "userNotFound" : "Pengguna tidak ditemukan",
     "passwordInvalid" : "Kata sandi salah",
-    "emailAlreadyTaken" : "Email sudah pernah terdaftar" 
+    "emailAlreadyTaken" : "Email sudah pernah terdaftar" ,
+    "emptyStory": "Data story kosong!!" 
+
 }

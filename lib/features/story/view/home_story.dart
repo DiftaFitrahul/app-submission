@@ -2,12 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:story_app/features/common/utils/common.dart';
+import 'package:story_app/utils/date_time_formater.dart';
 
 import '../../../utils/server_client_failure_msg.dart';
 import '../../../constant/assets.dart';
 import '../../../constant/color.dart';
 import '../../../routes/routes_name.dart';
 import '../../../utils/shimmer_effect.dart';
+import '../../common/cubit/common_cubit.dart';
 import '../bloc/story_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -55,7 +58,7 @@ class HomeScreen extends StatelessWidget {
               case StoryStateStatus.loading:
                 return _loadingWidget();
               case StoryStateStatus.success:
-                return _listStoryCard(state);
+                return _listStoryCard(context, state);
               case StoryStateStatus.failure:
                 return _errorWidget(context, state.message);
             }
@@ -75,26 +78,32 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _listStoryCard(StoryState state) {
-    return ListView.builder(
-      itemCount: state.allStoryData.listStory.length,
-      itemBuilder: (context, index) {
-        final allStory = state.allStoryData.listStory;
-        return _storyCard(
-          name: allStory[index].name,
-          imageUrl: allStory[index].photoUrl,
-          onTap: () {
-            context.pushNamed(AppRouteConstants.detailStoryRoute,
-                pathParameters: {"id": allStory[index].id});
-          },
-        );
-      },
-    );
+  Widget _listStoryCard(BuildContext context, StoryState state) {
+    return state.allStoryData.listStory.isEmpty
+        ? Center(
+            child: Text(AppLocalizations.of(context)!.emptyStory),
+          )
+        : ListView.builder(
+            itemCount: state.allStoryData.listStory.length,
+            itemBuilder: (context, index) {
+              final allStory = state.allStoryData.listStory;
+              return _storyCard(
+                name: allStory[index].name,
+                imageUrl: allStory[index].photoUrl,
+                time: allStory[index].createdAt,
+                onTap: () {
+                  context.pushNamed(AppRouteConstants.detailStoryRoute,
+                      pathParameters: {"id": allStory[index].id});
+                },
+              );
+            },
+          );
   }
 
   Widget _storyCard(
       {required String name,
       required String imageUrl,
+      required String time,
       required VoidCallback onTap}) {
     return GestureDetector(
       onTap: onTap,
@@ -124,13 +133,16 @@ class HomeScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                const Text(
-                  "27 Desember 2024",
-                  style: TextStyle(
-                    color: Color(0xff524B6B),
-                    fontSize: 12,
-                  ),
-                )
+                Builder(builder: (context) {
+                  return Text(
+                    dateTimeFormater(
+                        time, context.watch<CommonCubit>().state.languageCode),
+                    style: const TextStyle(
+                      color: Color(0xff524B6B),
+                      fontSize: 12,
+                    ),
+                  );
+                })
               ],
             ),
           ),

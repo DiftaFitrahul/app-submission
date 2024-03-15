@@ -7,15 +7,20 @@ import 'package:story_app/features/user/auth/bloc/auth_bloc.dart';
 import 'package:story_app/features/user/login/bloc/login_bloc.dart';
 import 'package:story_app/features/user/register/bloc/register_bloc.dart';
 import 'package:story_app/features/user/shared/data/repository/auth_repository.dart';
+import 'package:story_app/features/user/shared/data/repository/user_repository.dart';
 import 'package:story_app/routes/routes.dart';
 import 'package:story_app/features/common/utils/common.dart';
 import 'package:story_app/features/common/cubit/common_cubit.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp(
-      {super.key, required this.authRepository, required this.storyRepository});
+      {super.key,
+      required this.authRepository,
+      required this.storyRepository,
+      required this.userRepository});
   final AuthRepository authRepository;
   final StoryRepository storyRepository;
+  final UserRepository userRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,8 @@ class MainApp extends StatelessWidget {
             create: (context) => RegisterBloc(authRepository: authRepository),
           ),
           BlocProvider<CommonCubit>(
-            create: (context) => CommonCubit(),
+            create: (context) =>
+                CommonCubit(userRepository: userRepository)..getUserLocale(),
           ),
         ],
         child: Builder(builder: (context) {

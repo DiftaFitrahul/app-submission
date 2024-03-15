@@ -39,6 +39,7 @@
     "errorButton" : "Back",
     "userNotFound" : "User not found",
     "passwordInvalid" : "Invalid password",
-    "emailAlreadyTaken" : "Email is already taken" 
+    "emailAlreadyTaken" : "Email is already taken",
+    "emptyStory": "Data story is empty!!" 
 
 }

@@ -65,7 +65,7 @@ class StoryBloc extends Bloc<StoryEvent, StoryState> {
   void _onStoryPosted(StoryPosted event, Emitter<StoryState> emit) async {
     try {
       emit(state.copyWith(statePostStatus: PostStoryStateStatus.loading));
-      final imageBytes = await compressImage(file: event.imageFile);
+      final imageBytes = await compressImage(imageFile: event.imageFile);
       final result = await _storyRepository.addStory(
           description: event.description,
           fileName: event.imageFile.name,

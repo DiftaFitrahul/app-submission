@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:story_app/utils/date_time_formater.dart';
 
 import '../../../constant/color.dart';
 import '../../../utils/server_client_failure_msg.dart';
 import '../../../utils/shimmer_effect.dart';
+import '../../common/cubit/common_cubit.dart';
 import '../bloc/story_bloc.dart';
 import '../data/model/story_data.dart';
 
@@ -53,6 +57,7 @@ class DetailStoryScreen extends StatelessWidget {
   }
 
   Widget _successWidget(StoryData storyData) {
+    log(storyData.createdAt);
     return Stack(
       children: [
         Column(
@@ -82,11 +87,14 @@ class DetailStoryScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  Text(
-                    DateTime.tryParse(storyData.createdAt).toString(),
-                    style:
-                        const TextStyle(color: Color(0xff524B6B), fontSize: 12),
-                  )
+                  Builder(builder: (context) {
+                    return Text(
+                      dateTimeFormater(storyData.createdAt,
+                          context.watch<CommonCubit>().state.languageCode),
+                      style: const TextStyle(
+                          color: Color(0xff524B6B), fontSize: 12),
+                    );
+                  })
                 ],
               ),
             ),

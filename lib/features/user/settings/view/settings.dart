@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:story_app/routes/routes_name.dart';
 
+import '../../../../routes/routes_name.dart';
 import '../../../../constant/color.dart';
 import '../../../common/cubit/common_cubit.dart';
 import '../../../common/utils/common.dart';
@@ -36,6 +36,7 @@ class SettingsScreen extends StatelessWidget {
             _logoutSetting(
               context,
               onTap: () {
+                context.read<CommonCubit>().deleteUserLocale();
                 context.read<AuthBloc>().add(AuthOut());
                 context.goNamed(AppRouteConstants.loginRoute);
               },

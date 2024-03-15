@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:story_app/features/user/shared/data/repository/user_repository.dart';
 import 'package:story_app/main_app.dart';
 
 import 'package:story_app/features/story/data/data_source/story_data_source.dart';
@@ -17,5 +18,6 @@ void main() {
         authDataSource: authDataSource, localDataSorce: localDataSource),
     storyRepository: StoryRepositoryImp(
         localDataSource: localDataSource, storyDataSource: storyDataSource),
+    userRepository: UserRepositoryImp(localDataSorce: localDataSource),
   ));
 }
