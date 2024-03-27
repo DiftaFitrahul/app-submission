@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:story_app/app_config.dart';
+import 'package:story_app/features/location/cubit/location_cubit.dart';
 
 import 'package:story_app/features/story/bloc/story_bloc.dart';
 import 'package:story_app/features/story/data/repository/story_repository.dart';
+import 'package:story_app/features/story/view/screen/detail_story.dart';
 import 'package:story_app/features/user/auth/bloc/auth_bloc.dart';
 import 'package:story_app/features/user/login/bloc/login_bloc.dart';
 import 'package:story_app/features/user/register/bloc/register_bloc.dart';
@@ -45,14 +48,18 @@ class MainApp extends StatelessWidget {
             create: (context) =>
                 CommonCubit(userRepository: userRepository)..getUserLocale(),
           ),
+          BlocProvider<LocationCubit>(
+            create: (context) => LocationCubit(),
+          ),
         ],
         child: Builder(builder: (context) {
-          return MaterialApp.router(
+          return MaterialApp(
             debugShowCheckedModeBanner: false,
-            routerDelegate: appRouter?.routerDelegate,
-            routeInformationProvider: appRouter?.routeInformationProvider,
-            routeInformationParser: appRouter?.routeInformationParser,
-            title: "Story App",
+            // routerDelegate: appRouter?.routerDelegate,
+            // routeInformationProvider: appRouter?.routeInformationProvider,
+            // routeInformationParser: appRouter?.routeInformationParser,
+            home: const DetailStoryScreen(id: ""),
+            title: AppConfig.shared.title,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,

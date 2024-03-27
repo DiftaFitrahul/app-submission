@@ -40,6 +40,12 @@
     "userNotFound" : "User not found",
     "passwordInvalid" : "Invalid password",
     "emailAlreadyTaken" : "Email is already taken",
-    "emptyStory": "Data story is empty!!" 
+    "emptyStory": "Data story is empty!!",
+    "locationDeniedTitle" : "Failed activate GPS",
+    "locationDeniedSubtitle" : "There is failure while activating GPS",
+    "locationDeniedButtonTitle" : "Try Again",
+    "locationPermanentlyDeniedTitle" : "GPS is Permanently Denied",
+    "locationPermanentlyDeniedSubtitle" : "GPS is not allowed in this application",
+    "locationPermanentlyDeniedButtonTitle" : "Open Settings" 
 
 }

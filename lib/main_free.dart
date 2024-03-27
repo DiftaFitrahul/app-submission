@@ -10,7 +10,10 @@ import 'package:story_app/features/user/shared/data/data_source/local_data.dart'
 import 'package:story_app/features/user/shared/data/repository/auth_repository.dart';
 
 void main() {
-  AppConfig.create(flavor: Flavor.free);
+  AppConfig.create(
+    title: "Story App",
+    flavor: Flavor.free,
+  );
 
   const authDataSource = AuthDataSource();
   const localDataSource = LocalDataSource();

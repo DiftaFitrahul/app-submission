@@ -6,11 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../constant/color.dart';
-import '../../../utils/global_dialog.dart';
-import '../../../utils/server_client_failure_msg.dart';
-import '../../common/utils/common.dart';
-import '../bloc/story_bloc.dart';
+import '../../../../constant/color.dart';
+import '../../../../utils/global_dialog.dart';
+import '../../../../utils/server_client_failure_msg.dart';
+import '../../../common/utils/common.dart';
+import '../../bloc/story_bloc.dart';
 
 class PostStory extends StatefulWidget {
   const PostStory({super.key});
@@ -131,7 +131,7 @@ class _PostStoryState extends State<PostStory> {
                 onTap: () {
                   context.pop();
                   context.pop();
-                  context.read<StoryBloc>().add(StoryFetched());
+                  context.read<StoryBloc>().add(StoryRefreshed());
                 },
               );
               break;

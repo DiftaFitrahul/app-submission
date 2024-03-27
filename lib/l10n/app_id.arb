@@ -40,6 +40,12 @@
     "userNotFound" : "Pengguna tidak ditemukan",
     "passwordInvalid" : "Kata sandi salah",
     "emailAlreadyTaken" : "Email sudah pernah terdaftar" ,
-    "emptyStory": "Data story kosong!!" 
+    "emptyStory": "Data story kosong!!",
+    "locationDeniedTitle" : "Gagal Menyalakan GPS",
+    "locationDeniedSubtitle" : "Terdapat kesalahan ketika menyalakan GPS",
+    "locationDeniedButtonTitle" : "Coba Lagi",
+    "locationPermanentlyDeniedTitle" : "GPS Tidak Dapat Dinyalakan",
+    "locationPermanentlyDeniedSubtitle" : "Secara permanent GPS tidak mengizinkan untuk digunakan di aplikasi ini",
+    "locationPermanentlyDeniedButtonTitle" : "Buka Pengaturan"
 
 }
