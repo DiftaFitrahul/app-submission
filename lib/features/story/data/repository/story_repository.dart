@@ -23,7 +23,8 @@ abstract class StoryRepository {
       required String fileName,
       double? lat,
       double? lon});
-  Future<Either<Failure, AllStoryData>> getAllStory();
+  Future<Either<Failure, AllStoryData>> getStory(
+      {required int page, required int size});
   Future<Either<Failure, DetailStoryData>> getDetailStory({required String id});
 }
 
@@ -64,12 +65,13 @@ class StoryRepositoryImp extends StoryRepository {
   }
 
   @override
-  Future<Either<Failure, AllStoryData>> getAllStory() async {
+  Future<Either<Failure, AllStoryData>> getStory(
+      {required int page, required int size}) async {
     try {
       final token = await _localDataSorce.userToken;
       if (token != null) {
-        final getAllStoryResult =
-            await _storyDataSource.getAllStory(token: token);
+        final getAllStoryResult = await _storyDataSource.getStory(
+            token: token, page: page, size: size);
         return Right(getAllStoryResult);
       } else {
         return Left(ServerFailure(message: "Error occured!!"));

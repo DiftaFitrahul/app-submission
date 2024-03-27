@@ -13,8 +13,40 @@ import '../../../utils/shimmer_effect.dart';
 import '../../common/cubit/common_cubit.dart';
 import '../bloc/story_bloc.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    _scrollController.addListener(_onScroll);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _onScroll() async {
+    if (_isBottom) context.read<StoryBloc>().add(StoryFetched());
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +75,20 @@ class HomeScreen extends StatelessWidget {
       body: RefreshIndicator(
         onRefresh: () async {
           await Future.delayed(const Duration(seconds: 1)).then((_) {
-            context.read<StoryBloc>().add(StoryAllFetched());
+            context.read<StoryBloc>().add(StoryRefreshed());
           });
         },
         child: BlocBuilder<StoryBloc, StoryState>(
           buildWhen: (previous, current) =>
-              previous.allStoryData != current.allStoryData ||
+              previous.allStoryData.listStory !=
+                  current.allStoryData.listStory ||
               previous.stateStatus != current.stateStatus,
           builder: (context, state) {
             switch (state.stateStatus) {
               case StoryStateStatus.initial:
-                context.read<StoryBloc>().add(StoryAllFetched());
+                context.read<StoryBloc>().add(StoryFetched());
                 return _loadingWidget();
-              case StoryStateStatus.loading:
+              case StoryStateStatus.refreshing:
                 return _loadingWidget();
               case StoryStateStatus.success:
                 return _listStoryCard(context, state);
@@ -84,18 +117,23 @@ class HomeScreen extends StatelessWidget {
             child: Text(AppLocalizations.of(context)!.emptyStory),
           )
         : ListView.builder(
-            itemCount: state.allStoryData.listStory.length,
+            itemCount: state.hasReachedMaxGetStory
+                ? state.allStoryData.listStory.length
+                : state.allStoryData.listStory.length + 1,
+            controller: _scrollController,
             itemBuilder: (context, index) {
               final allStory = state.allStoryData.listStory;
-              return _storyCard(
-                name: allStory[index].name,
-                imageUrl: allStory[index].photoUrl,
-                time: allStory[index].createdAt,
-                onTap: () {
-                  context.pushNamed(AppRouteConstants.detailStoryRoute,
-                      pathParameters: {"id": allStory[index].id});
-                },
-              );
+              return index >= state.allStoryData.listStory.length
+                  ? _bottomLoader()
+                  : _storyCard(
+                      name: allStory[index].name,
+                      imageUrl: allStory[index].photoUrl,
+                      time: allStory[index].createdAt,
+                      onTap: () {
+                        context.pushNamed(AppRouteConstants.detailStoryRoute,
+                            pathParameters: {"id": allStory[index].id});
+                      },
+                    );
             },
           );
   }
@@ -203,6 +241,19 @@ class HomeScreen extends StatelessWidget {
         ),
         ListView()
       ],
+    );
+  }
+
+  Widget _bottomLoader() {
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 12.0),
+        child: SizedBox(
+          height: 24,
+          width: 24,
+          child: CircularProgressIndicator(),
+        ),
+      ),
     );
   }
 }

@@ -56,9 +56,10 @@ class StoryDataSource {
     }
   }
 
-  Future<AllStoryData> getAllStory({required String token}) async {
+  Future<AllStoryData> getStory(
+      {required String token, required int page, required int size}) async {
     try {
-      final uri = Uri.parse('${Env.baseUrl}/stories');
+      final uri = Uri.parse('${Env.baseUrl}/stories?page=$page&size=$size');
       final response = await http.get(uri,
           headers: <String, String>{"Authorization": "Bearer $token"});
       if (response.statusCode == 200 || response.statusCode == 201) {

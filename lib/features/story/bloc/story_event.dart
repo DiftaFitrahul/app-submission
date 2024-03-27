@@ -4,7 +4,9 @@ sealed class StoryEvent {
   const StoryEvent();
 }
 
-final class StoryAllFetched extends StoryEvent {}
+final class StoryFetched extends StoryEvent {}
+
+final class StoryRefreshed extends StoryEvent {}
 
 final class StoryDetailFetched extends StoryEvent {
   const StoryDetailFetched({required this.id});

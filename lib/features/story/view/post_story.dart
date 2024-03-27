@@ -131,7 +131,7 @@ class _PostStoryState extends State<PostStory> {
                 onTap: () {
                   context.pop();
                   context.pop();
-                  context.read<StoryBloc>().add(StoryAllFetched());
+                  context.read<StoryBloc>().add(StoryFetched());
                 },
               );
               break;

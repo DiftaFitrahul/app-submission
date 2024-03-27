@@ -2,7 +2,7 @@ part of "story_bloc.dart";
 
 enum StoryStateStatus {
   initial,
-  loading,
+  refreshing,
   success,
   failure,
 }
@@ -27,7 +27,7 @@ class StoryState {
   final DetailStoryStateStatus stateDetailStatus;
   final PostStoryStateStatus statePostStatus;
   final DetailStoryData detailStoryData;
-
+  final bool hasReachedMaxGetStory;
   final String message;
 
   const StoryState(
@@ -36,7 +36,8 @@ class StoryState {
       required this.stateStatus,
       required this.statePostStatus,
       required this.message,
-      required this.stateDetailStatus});
+      required this.stateDetailStatus,
+      required this.hasReachedMaxGetStory});
   factory StoryState.initial() {
     return const StoryState(
         allStoryData: AllStoryData(),
@@ -44,6 +45,7 @@ class StoryState {
         stateStatus: StoryStateStatus.initial,
         stateDetailStatus: DetailStoryStateStatus.initial,
         statePostStatus: PostStoryStateStatus.initial,
+        hasReachedMaxGetStory: false,
         message: "");
   }
   StoryState copyWith(
@@ -52,6 +54,7 @@ class StoryState {
       StoryStateStatus? stateStatus,
       DetailStoryStateStatus? stateDetailStatus,
       PostStoryStateStatus? statePostStatus,
+      bool? hasReachedMaxGetStory,
       String? message}) {
     return StoryState(
       allStoryData: allStoryData ?? this.allStoryData,
@@ -59,6 +62,8 @@ class StoryState {
       stateStatus: stateStatus ?? this.stateStatus,
       stateDetailStatus: stateDetailStatus ?? this.stateDetailStatus,
       statePostStatus: statePostStatus ?? this.statePostStatus,
+      hasReachedMaxGetStory:
+          hasReachedMaxGetStory ?? this.hasReachedMaxGetStory,
       message: message ?? this.message,
     );
   }
