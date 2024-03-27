@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:story_app/utils/date_time_formater.dart';
 
-import '../../../constant/color.dart';
-import '../../../utils/server_client_failure_msg.dart';
-import '../../../utils/shimmer_effect.dart';
-import '../../common/cubit/common_cubit.dart';
-import '../bloc/story_bloc.dart';
-import '../data/model/story_data.dart';
+import '../../../../constant/color.dart';
+import '../../../../utils/server_client_failure_msg.dart';
+import '../../../../utils/shimmer_effect.dart';
+import '../../../common/cubit/common_cubit.dart';
+import '../../bloc/story_bloc.dart';
+import '../../data/model/story_data.dart';
 
 class DetailStoryScreen extends StatelessWidget {
   const DetailStoryScreen({super.key, required this.id});

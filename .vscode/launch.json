@@ -1,0 +1,40 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "free debug",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_free.dart",
+            "args": ["--flavor", "free", "-t", "lib/main_free.dart" ],
+            "flutterMode": "debug"
+        },
+        {
+            "name": "free release",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_free.dart",
+            "args": ["--flavor", "free", "-t", "lib/main_free.dart" ],
+            "flutterMode": "release"
+        },
+        {
+            "name": "paid debug",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_paid.dart",
+            "args": ["--flavor", "paid", "-t", "lib/main_paid.dart" ],
+            "flutterMode": "debug"
+        },
+        {
+            "name": "paid release",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_paid.dart",
+            "args": ["--flavor", "paid", "-t", "lib/main_paid.dart" ],
+            "flutterMode": "release"
+        }
+    ]
+}
