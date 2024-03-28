@@ -117,7 +117,9 @@ class StoryBloc extends Bloc<StoryEvent, StoryState> {
       final result = await _storyRepository.addStory(
           description: event.description,
           fileName: event.imageFile.name,
-          imageBytes: imageBytes);
+          imageBytes: imageBytes,
+          lat: event.lat,
+          lon: event.lon);
       result.fold((failure) {
         emit(state.copyWith(
             statePostStatus: PostStoryStateStatus.failure,

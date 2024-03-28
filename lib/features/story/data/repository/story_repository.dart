@@ -45,7 +45,9 @@ class StoryRepositoryImp extends StoryRepository {
             token: token,
             description: description,
             fileName: fileName,
-            imageBytes: imageBytes);
+            imageBytes: imageBytes,
+            lat: lat,
+            lon: lon);
         if (addStoryDataResult) {
           return Left(ServerFailure(message: "Error occured!!"));
         }

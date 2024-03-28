@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:story_app/app_config.dart';
 import 'package:story_app/features/story/view/select_location.dart';
 import 'package:story_app/routes/routes_name.dart';
 
@@ -28,6 +30,8 @@ class _PostStoryState extends State<PostStory> {
   XFile imageFile = XFile("");
   bool validateImage = true;
   bool validateDescription = true;
+  LatLng? userSelectLatLngLocation;
+  String? userSelectAddressLocation;
   @override
   void initState() {
     _descriptionController = TextEditingController();
@@ -159,9 +163,12 @@ class _PostStoryState extends State<PostStory> {
               _showBottomSheetFotoStory(context: context);
             },
             iconLocationPressed: () async {
-              final result = await context
+              final List? result = await context
                   .pushNamed(AppRouteConstants.selectLocationRoute);
-              log(result.toString());
+              setState(() {
+                userSelectLatLngLocation = result![0];
+                userSelectAddressLocation = result[1];
+              });
             },
             onPost: () {
               if (imageFile.path.isEmpty &&
@@ -183,6 +190,8 @@ class _PostStoryState extends State<PostStory> {
               } else {
                 context.read<StoryBloc>().add(StoryPosted(
                     description: _descriptionController.text,
+                    lat: userSelectLatLngLocation?.latitude,
+                    lon: userSelectLatLngLocation?.longitude,
                     imageFile: imageFile));
               }
             },
@@ -235,8 +244,8 @@ class _PostStoryState extends State<PostStory> {
               validate: validateImage,
               uploadImageSucces: imagePath.isNotEmpty,
               iconImagePressed: iconImagePressed),
-          const SizedBox(height: 10),
-          _selectLocationComp(iconLocationPressed: iconLocationPressed),
+          if (AppConfig.shared.flavor == Flavor.paid)
+            _selectLocationComp(iconLocationPressed: iconLocationPressed),
           const SizedBox(height: 10),
           _multilineTexfieldComp(
               title: multilineTitle,
@@ -363,7 +372,7 @@ class _PostStoryState extends State<PostStory> {
 
   Widget _selectLocationComp({required VoidCallback iconLocationPressed}) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 7, top: 7),
+      padding: const EdgeInsets.only(bottom: 7, top: 17),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -394,10 +403,10 @@ class _PostStoryState extends State<PostStory> {
                       borderRadius: BorderRadius.circular(8),
                       color: const Color.fromARGB(255, 226, 226, 255),
                       border: Border.all(width: 1, color: darkBlue)),
-                  child: const Text(
-                    'Text Placeholder',
+                  child: Text(
+                    userSelectAddressLocation ?? 'Text Placeholder',
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xff524B6B),
                       fontSize: 16,
                       fontWeight: FontWeight.normal,

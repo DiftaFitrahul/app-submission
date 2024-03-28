@@ -24,8 +24,8 @@ class SelectLocationScreen extends StatefulWidget {
 class _PostStoryPaidState extends State<SelectLocationScreen> {
   final initialPosition = const LatLng(-6.175392, 106.827153);
   late GoogleMapController _mapController;
-  LatLng? userLatLngLocation;
-  String? userAddresLocation;
+  LatLng? userSelectLatLngLocation;
+  String? userSelectAddresLocation;
   final Set<Marker> _markers = {};
 
   @override
@@ -67,7 +67,7 @@ class _PostStoryPaidState extends State<SelectLocationScreen> {
             case GPSPermisson.success:
               LatLng latLngUser =
                   await context.read<LocationCubit>().getUserLatLng();
-              userLatLngLocation = latLngUser;
+              userSelectLatLngLocation = latLngUser;
               onMoveNewPosition(latLngUser);
               break;
             default:
@@ -96,14 +96,15 @@ class _PostStoryPaidState extends State<SelectLocationScreen> {
               onPressed: () async {
                 LatLng latLngUser =
                     await context.read<LocationCubit>().getUserLatLng();
-                userLatLngLocation = latLngUser;
+                userSelectLatLngLocation = latLngUser;
                 onMoveNewPosition(latLngUser);
               },
             ),
             _boxSelectButtonComp(
               onSelectLocation: () async {
-                if (userLatLngLocation != null) {
-                  context.pop([userLatLngLocation, userAddresLocation]);
+                if (userSelectLatLngLocation != null) {
+                  context.pop(
+                      [userSelectLatLngLocation, userSelectAddresLocation]);
                 }
               },
             )
@@ -221,8 +222,8 @@ class _PostStoryPaidState extends State<SelectLocationScreen> {
     final address =
         '${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     defineMarker(latLng, street ?? "", address);
-    userLatLngLocation = latLng;
-    userAddresLocation = address;
+    userSelectLatLngLocation = latLng;
+    userSelectAddresLocation = address;
     _mapController.animateCamera(CameraUpdate.newLatLng(latLng));
   }
 

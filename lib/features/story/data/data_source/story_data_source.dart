@@ -25,12 +25,15 @@ class StoryDataSource {
           http.MultipartFile.fromBytes('photo', imageBytes, filename: fileName);
       final Map<String, String> fields = {
         "description": description,
+        "lat": "$lat",
+        "lon": "$lon"
       };
       final Map<String, String> headers = {
         "Content-type": 'multipart/form-data',
         "Authorization": "Bearer $token"
       };
       request.files.add(multiPartFile);
+
       request.fields.addAll(fields);
       request.headers.addAll(headers);
       final response = await request.send();
