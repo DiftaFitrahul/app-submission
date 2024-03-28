@@ -11,8 +11,8 @@ class StoryData with _$StoryData {
     @Default("") String description,
     @Default("") String photoUrl,
     @Default("") String createdAt,
-    @Default(0.0) double lat,
-    @Default(0.0) double lon,
+    double? lat,
+    double? lon,
   }) = _StoryData;
   factory StoryData.fromJson(Map<String, Object?> json) =>
       _$StoryDataFromJson(json);

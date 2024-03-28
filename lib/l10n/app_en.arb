@@ -46,6 +46,8 @@
     "locationDeniedButtonTitle" : "Try Again",
     "locationPermanentlyDeniedTitle" : "GPS is Permanently Denied",
     "locationPermanentlyDeniedSubtitle" : "GPS is not allowed in this application",
-    "locationPermanentlyDeniedButtonTitle" : "Open Settings" 
+    "locationPermanentlyDeniedButtonTitle" : "Open Settings",
+    "labelTextLocationNotAvailable" : "Location isn't available"
+
 
 }

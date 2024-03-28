@@ -13,8 +13,8 @@ _$StoryDataImpl _$$StoryDataImplFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String? ?? "",
       photoUrl: json['photoUrl'] as String? ?? "",
       createdAt: json['createdAt'] as String? ?? "",
-      lat: (json['lat'] as num?)?.toDouble() ?? 0.0,
-      lon: (json['lon'] as num?)?.toDouble() ?? 0.0,
+      lat: (json['lat'] as num?)?.toDouble(),
+      lon: (json['lon'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$StoryDataImplToJson(_$StoryDataImpl instance) =>

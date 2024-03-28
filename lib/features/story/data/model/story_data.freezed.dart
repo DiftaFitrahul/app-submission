@@ -25,8 +25,8 @@ mixin _$StoryData {
   String get description => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
-  double get lat => throw _privateConstructorUsedError;
-  double get lon => throw _privateConstructorUsedError;
+  double? get lat => throw _privateConstructorUsedError;
+  double? get lon => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,8 +45,8 @@ abstract class $StoryDataCopyWith<$Res> {
       String description,
       String photoUrl,
       String createdAt,
-      double lat,
-      double lon});
+      double? lat,
+      double? lon});
 }
 
 /// @nodoc
@@ -67,8 +67,8 @@ class _$StoryDataCopyWithImpl<$Res, $Val extends StoryData>
     Object? description = null,
     Object? photoUrl = null,
     Object? createdAt = null,
-    Object? lat = null,
-    Object? lon = null,
+    Object? lat = freezed,
+    Object? lon = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -91,14 +91,14 @@ class _$StoryDataCopyWithImpl<$Res, $Val extends StoryData>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String,
-      lat: null == lat
+      lat: freezed == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as double,
-      lon: null == lon
+              as double?,
+      lon: freezed == lon
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ) as $Val);
   }
 }
@@ -117,8 +117,8 @@ abstract class _$$StoryDataImplCopyWith<$Res>
       String description,
       String photoUrl,
       String createdAt,
-      double lat,
-      double lon});
+      double? lat,
+      double? lon});
 }
 
 /// @nodoc
@@ -137,8 +137,8 @@ class __$$StoryDataImplCopyWithImpl<$Res>
     Object? description = null,
     Object? photoUrl = null,
     Object? createdAt = null,
-    Object? lat = null,
-    Object? lon = null,
+    Object? lat = freezed,
+    Object? lon = freezed,
   }) {
     return _then(_$StoryDataImpl(
       id: null == id
@@ -161,14 +161,14 @@ class __$$StoryDataImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String,
-      lat: null == lat
+      lat: freezed == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as double,
-      lon: null == lon
+              as double?,
+      lon: freezed == lon
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ));
   }
 }
@@ -182,8 +182,8 @@ class _$StoryDataImpl implements _StoryData {
       this.description = "",
       this.photoUrl = "",
       this.createdAt = "",
-      this.lat = 0.0,
-      this.lon = 0.0});
+      this.lat,
+      this.lon});
 
   factory _$StoryDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$StoryDataImplFromJson(json);
@@ -204,11 +204,9 @@ class _$StoryDataImpl implements _StoryData {
   @JsonKey()
   final String createdAt;
   @override
-  @JsonKey()
-  final double lat;
+  final double? lat;
   @override
-  @JsonKey()
-  final double lon;
+  final double? lon;
 
   @override
   String toString() {
@@ -258,8 +256,8 @@ abstract class _StoryData implements StoryData {
       final String description,
       final String photoUrl,
       final String createdAt,
-      final double lat,
-      final double lon}) = _$StoryDataImpl;
+      final double? lat,
+      final double? lon}) = _$StoryDataImpl;
 
   factory _StoryData.fromJson(Map<String, dynamic> json) =
       _$StoryDataImpl.fromJson;
@@ -275,9 +273,9 @@ abstract class _StoryData implements StoryData {
   @override
   String get createdAt;
   @override
-  double get lat;
+  double? get lat;
   @override
-  double get lon;
+  double? get lon;
   @override
   @JsonKey(ignore: true)
   _$$StoryDataImplCopyWith<_$StoryDataImpl> get copyWith =>

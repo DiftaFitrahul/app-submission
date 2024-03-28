@@ -46,6 +46,7 @@
     "locationDeniedButtonTitle" : "Coba Lagi",
     "locationPermanentlyDeniedTitle" : "GPS Tidak Dapat Dinyalakan",
     "locationPermanentlyDeniedSubtitle" : "Secara permanent GPS tidak mengizinkan untuk digunakan di aplikasi ini",
-    "locationPermanentlyDeniedButtonTitle" : "Buka Pengaturan"
+    "locationPermanentlyDeniedButtonTitle" : "Buka Pengaturan",
+    "labelTextLocationNotAvailable" : "Location tidak tersedia"
 
 }

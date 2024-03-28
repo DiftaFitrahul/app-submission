@@ -1,4 +1,4 @@
-import 'package:permission_handler/permission_handler.dart';
+import 'package:location/location.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum GPSPermisson {
@@ -13,8 +13,8 @@ class LocationCubit extends Cubit<GPSPermisson> {
   LocationCubit() : super(GPSPermisson.initial);
 
   void requestGPS() async {
-    final status = await Permission.location.request();
-    if (status == PermissionStatus.permanentlyDenied) {
+    final status = await Location().requestPermission();
+    if (status == PermissionStatus.deniedForever) {
       emit(GPSPermisson.permanentlyDenied);
     } else if (status == PermissionStatus.denied) {
       emit(GPSPermisson.denied);
