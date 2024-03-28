@@ -47,7 +47,10 @@
     "locationPermanentlyDeniedTitle" : "GPS is Permanently Denied",
     "locationPermanentlyDeniedSubtitle" : "GPS is not allowed in this application",
     "locationPermanentlyDeniedButtonTitle" : "Open Settings",
-    "labelTextLocationNotAvailable" : "Location isn't available"
+    "labelTextLocationNotAvailable" : "Location isn't available",
+    "labelSelectLocation" : "Select Location",
+    "labelPickLocation" : "Press a while to select location",
+    "labelButtonPickLocation" : "Select"
 
 
 }

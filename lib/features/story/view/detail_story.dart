@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,12 +15,12 @@ import 'package:story_app/features/location/utils/location_error_dialog.dart';
 import 'package:story_app/utils/date_time_formater.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 
-import '../../../../constant/color.dart';
-import '../../../../utils/server_client_failure_msg.dart';
-import '../../../../utils/shimmer_effect.dart';
-import '../../../common/cubit/common_cubit.dart';
-import '../../bloc/story_bloc.dart';
-import '../../data/model/story_data.dart';
+import '../../../constant/color.dart';
+import '../../../utils/server_client_failure_msg.dart';
+import '../../../utils/shimmer_effect.dart';
+import '../../common/cubit/common_cubit.dart';
+import '../bloc/story_bloc.dart';
+import '../data/model/story_data.dart';
 
 class DetailStoryScreen extends StatefulWidget {
   const DetailStoryScreen({super.key, required this.id});
@@ -30,67 +32,35 @@ class DetailStoryScreen extends StatefulWidget {
 
 class _DetailStoryScreenState extends State<DetailStoryScreen> {
   final initialPosition = const LatLng(-6.175392, 106.827153);
-  late GoogleMapController mapController;
+  late GoogleMapController _mapController;
 
-  late final Set<Marker> markers = {};
-
-  geo.Placemark? placemark;
+  late final Set<Marker> _markers = {};
 
   @override
-  void didChangeDependencies() {
-    context.read<LocationCubit>().requestGPS();
-    super.didChangeDependencies();
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocListener<LocationCubit, GPSPermisson>(
-      listener: (context, state) {
-        switch (state) {
-          case GPSPermisson.initial:
-            break;
-          case GPSPermisson.requesting:
-            context.read<LocationCubit>().requestGPS();
-            break;
-          case GPSPermisson.denied:
-            LocationErrorDialog.gpsDeniedDialog(
-              context: context,
-              onPressed: () {
-                context.read<LocationCubit>().requestGPS();
-                context.pop();
-              },
-            );
-            break;
-          case GPSPermisson.permanentlyDenied:
-            LocationErrorDialog.gpsPermanentlyDeniedDialog(
-              context: context,
-              onPressed: () {
-                openAppSettings();
-                context.pop();
-              },
-            );
-            break;
-          case GPSPermisson.success:
-            break;
+        body: BlocBuilder<StoryBloc, StoryState>(
+      buildWhen: (previous, current) =>
+          previous.detailStoryData != current.detailStoryData ||
+          previous.stateDetailStatus != current.stateDetailStatus,
+      builder: (context, state) {
+        switch (state.stateDetailStatus) {
+          case DetailStoryStateStatus.initial:
+            return _loadingWidget();
+          case DetailStoryStateStatus.loading:
+            return _loadingWidget();
+          case DetailStoryStateStatus.success:
+            return _successWidget(context, state.detailStoryData.story);
+          case DetailStoryStateStatus.failure:
+            return _errorWidget(context, state.message);
         }
       },
-      child: BlocBuilder<StoryBloc, StoryState>(
-          buildWhen: (previous, current) =>
-              previous.detailStoryData != current.detailStoryData ||
-              previous.stateDetailStatus != current.stateDetailStatus,
-          builder: (context, state) {
-            switch (state.stateDetailStatus) {
-              case DetailStoryStateStatus.initial:
-                return _loadingWidget();
-              case DetailStoryStateStatus.loading:
-                return _loadingWidget();
-              case DetailStoryStateStatus.success:
-                return _successWidget(context, state.detailStoryData.story);
-              case DetailStoryStateStatus.failure:
-                return _errorWidget(context, state.message);
-            }
-          }),
     ));
   }
 
@@ -104,13 +74,13 @@ class _DetailStoryScreenState extends State<DetailStoryScreen> {
           ),
           onMapCreated: (controller) async {
             setState(() {
-              mapController = controller;
+              _mapController = controller;
             });
             if (storyData.lat != null && storyData.lon != null) {
               onMoveNewPosition(LatLng(storyData.lat ?? 0, storyData.lon ?? 0));
             }
           },
-          markers: markers,
+          markers: _markers,
           myLocationEnabled: false,
           compassEnabled: false,
           zoomControlsEnabled: false,
@@ -169,7 +139,7 @@ class _DetailStoryScreenState extends State<DetailStoryScreen> {
                 splashColor: Colors.black.withOpacity(0.03),
                 onTap: () {
                   if (storyData.lat != null && storyData.lon != null) {
-                    mapController.animateCamera(CameraUpdate.newCameraPosition(
+                    _mapController.animateCamera(CameraUpdate.newCameraPosition(
                         CameraPosition(
                             target:
                                 LatLng(storyData.lat ?? 0, storyData.lon ?? 0),
@@ -197,12 +167,16 @@ class _DetailStoryScreenState extends State<DetailStoryScreen> {
                                   size: 30,
                                 ),
                                 const SizedBox(width: 7),
-                                Text(
-                                  storyData.name,
-                                  style: const TextStyle(
-                                      color: darkBlue,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15),
+                                SizedBox(
+                                  width: 100,
+                                  child: Text(
+                                    storyData.name,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        color: darkBlue,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15),
+                                  ),
                                 )
                               ],
                             ),
@@ -214,6 +188,7 @@ class _DetailStoryScreenState extends State<DetailStoryScreen> {
                                         .watch<CommonCubit>()
                                         .state
                                         .languageCode),
+                                overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     color: Color(0xff524B6B), fontSize: 12),
                               );
@@ -409,7 +384,7 @@ class _DetailStoryScreenState extends State<DetailStoryScreen> {
     final address =
         '${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     defineMarker(latLng, street ?? "", address);
-    mapController.animateCamera(CameraUpdate.newLatLng(latLng));
+    _mapController.animateCamera(CameraUpdate.newLatLng(latLng));
   }
 
   void defineMarker(LatLng latLng, String street, String address) {
@@ -423,8 +398,8 @@ class _DetailStoryScreenState extends State<DetailStoryScreen> {
     );
 
     setState(() {
-      markers.clear();
-      markers.add(marker);
+      _markers.clear();
+      _markers.add(marker);
     });
   }
 }

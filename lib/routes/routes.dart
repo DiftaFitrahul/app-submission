@@ -1,11 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:story_app/features/story/view/select_location.dart';
 
 import '../features/story/bloc/story_bloc.dart';
-import '../features/story/view/screen/detail_story.dart';
-import '../features/story/view/screen/home_story.dart';
-import '../features/story/view/screen/post_story.dart';
+import '../features/story/view/detail_story.dart';
+import '../features/story/view/home_story.dart';
+import '../features/story/view/post_story.dart';
 import '../features/user/login/view/login.dart';
 import '../features/user/settings/view/settings.dart';
 import '../features/user/register/view/register.dart';
@@ -44,6 +45,11 @@ class AppRouter {
         name: AppRouteConstants.postStoryRoute,
         path: AppRouteConstants.postStoryRoute,
         builder: (context, state) => const PostStory(),
+      ),
+      GoRoute(
+        name: AppRouteConstants.selectLocationRoute,
+        path: AppRouteConstants.selectLocationRoute,
+        builder: (context, state) => const SelectLocationScreen(),
       ),
       GoRoute(
         name: AppRouteConstants.detailStoryRoute,

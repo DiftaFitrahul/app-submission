@@ -6,4 +6,5 @@ class AppRouteConstants {
   static const String settingsRoute = '/settings_route';
   static const String detailStoryRoute = '/detail_story_route';
   static const String postStoryRoute = '/post_story_route';
+  static const String selectLocationRoute = '/select_location_route';
 }

@@ -1,16 +1,20 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:story_app/features/story/view/select_location.dart';
+import 'package:story_app/routes/routes_name.dart';
 
-import '../../../../constant/color.dart';
-import '../../../../utils/global_dialog.dart';
-import '../../../../utils/server_client_failure_msg.dart';
-import '../../../common/utils/common.dart';
-import '../../bloc/story_bloc.dart';
+import '../../../constant/color.dart';
+import '../../../utils/global_dialog.dart';
+import '../../../utils/server_client_failure_msg.dart';
+import '../../common/utils/common.dart';
+import '../bloc/story_bloc.dart';
 
 class PostStory extends StatefulWidget {
   const PostStory({super.key});
@@ -154,6 +158,11 @@ class _PostStoryState extends State<PostStory> {
             iconImagePressed: () {
               _showBottomSheetFotoStory(context: context);
             },
+            iconLocationPressed: () async {
+              final result = await context
+                  .pushNamed(AppRouteConstants.selectLocationRoute);
+              log(result.toString());
+            },
             onPost: () {
               if (imageFile.path.isEmpty &&
                   _descriptionController.text.isEmpty) {
@@ -190,6 +199,7 @@ class _PostStoryState extends State<PostStory> {
     required String multilineTitle,
     required TextEditingController multilineTextEditingController,
     required VoidCallback iconImagePressed,
+    required VoidCallback iconLocationPressed,
     required VoidCallback onPost,
   }) {
     return Container(
@@ -226,6 +236,8 @@ class _PostStoryState extends State<PostStory> {
               uploadImageSucces: imagePath.isNotEmpty,
               iconImagePressed: iconImagePressed),
           const SizedBox(height: 10),
+          _selectLocationComp(iconLocationPressed: iconLocationPressed),
+          const SizedBox(height: 10),
           _multilineTexfieldComp(
               title: multilineTitle,
               controller: multilineTextEditingController,
@@ -251,6 +263,173 @@ class _PostStoryState extends State<PostStory> {
     );
   }
 
+  Widget _uploadFotoStory(
+      {required bool validate,
+      required String title,
+      required bool uploadImageSucces,
+      required VoidCallback iconImagePressed}) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: validate ? 7 : 0, top: 7),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12.0,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Color(0xff524B6B),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(width: 3),
+                const Text(
+                  '*',
+                  style: TextStyle(color: Colors.red, fontSize: 14),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 6,
+          ),
+          Row(
+            children: [
+              Flexible(
+                child: Container(
+                  width: double.infinity,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: const Color.fromARGB(255, 226, 226, 255),
+                      border: Border.all(width: 1, color: darkBlue)),
+                  child: Text(
+                    uploadImageSucces ? "Story-Foto" : 'Text Placeholder',
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Color(0xff524B6B),
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                borderRadius: BorderRadius.circular(8),
+                onTap: iconImagePressed,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 16),
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(width: 1, color: darkBlue)),
+                  child: Transform.scale(
+                    scale: 1.25,
+                    child: const Icon(
+                      Icons.camera_alt,
+                      color: Color(0xff524B6B),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          if (validate == false)
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12.0,
+                vertical: 5,
+              ),
+              child: Text(
+                AppLocalizations.of(context)!.addPhotoError,
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 163, 25, 15),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _selectLocationComp({required VoidCallback iconLocationPressed}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 7, top: 7),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12.0,
+            ),
+            child: Text(
+              AppLocalizations.of(context)!.labelSelectLocation,
+              style: const TextStyle(
+                color: Color(0xff524B6B),
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 6,
+          ),
+          Row(
+            children: [
+              Flexible(
+                child: Container(
+                  width: double.infinity,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: const Color.fromARGB(255, 226, 226, 255),
+                      border: Border.all(width: 1, color: darkBlue)),
+                  child: const Text(
+                    'Text Placeholder',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Color(0xff524B6B),
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                borderRadius: BorderRadius.circular(8),
+                onTap: iconLocationPressed,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 16),
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(width: 1, color: darkBlue)),
+                  child: Transform.scale(
+                    scale: 1.25,
+                    child: const Icon(
+                      Icons.my_location_rounded,
+                      color: Color(0xff524B6B),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _multilineTexfieldComp(
       {required String title,
       required TextEditingController controller,
@@ -264,13 +443,23 @@ class _PostStoryState extends State<PostStory> {
             padding: const EdgeInsets.symmetric(
               horizontal: 12.0,
             ),
-            child: Text(
-              title,
-              style: const TextStyle(
-                color: Color(0xff524B6B),
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Color(0xff524B6B),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(width: 3),
+                const Text(
+                  '*',
+                  style: TextStyle(color: Colors.red, fontSize: 14),
+                )
+              ],
             ),
           ),
           const SizedBox(
@@ -336,94 +525,6 @@ class _PostStoryState extends State<PostStory> {
                     ? null
                     : AppLocalizations.of(context)!.descriptionError),
           )
-        ],
-      ),
-    );
-  }
-
-  Widget _uploadFotoStory(
-      {required bool validate,
-      required String title,
-      required bool uploadImageSucces,
-      required VoidCallback iconImagePressed}) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: validate ? 7 : 0, top: 7),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12.0,
-            ),
-            child: Text(
-              title,
-              style: const TextStyle(
-                color: Color(0xff524B6B),
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 6,
-          ),
-          Row(
-            children: [
-              Flexible(
-                child: Container(
-                  width: double.infinity,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: const Color.fromARGB(255, 226, 226, 255),
-                      border: Border.all(width: 1, color: darkBlue)),
-                  child: Text(
-                    uploadImageSucces ? "Story-Foto" : 'Text Placeholder',
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Color(0xff524B6B),
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ),
-              ),
-              InkWell(
-                borderRadius: BorderRadius.circular(8),
-                onTap: iconImagePressed,
-                child: Container(
-                  margin: const EdgeInsets.only(left: 16),
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(width: 1, color: darkBlue)),
-                  child: Transform.scale(
-                    scale: 1.25,
-                    child: const Icon(
-                      Icons.camera_alt,
-                      color: Color(0xff524B6B),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          if (validate == false)
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12.0,
-                vertical: 5,
-              ),
-              child: Text(
-                AppLocalizations.of(context)!.addPhotoError,
-                style: const TextStyle(
-                  color: Color.fromARGB(255, 163, 25, 15),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 12,
-                ),
-              ),
-            ),
         ],
       ),
     );
