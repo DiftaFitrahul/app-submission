@@ -101,179 +101,184 @@ class _DetailStoryScreenState extends State<DetailStoryScreen> {
               ),
             ),
           ),
-        Align(
-          alignment: const Alignment(-0.89, -0.87),
-          child: ElevatedButton(
-              onPressed: () {
-                context.pop();
+        _backButton(),
+        _detailStoryBox(storyData)
+      ],
+    );
+  }
+
+  Widget _backButton() {
+    return Align(
+      alignment: const Alignment(-0.89, -0.87),
+      child: ElevatedButton(
+          onPressed: () {
+            context.pop();
+          },
+          style: ElevatedButton.styleFrom(
+            minimumSize: Size.zero,
+            elevation: 4,
+            backgroundColor: Colors.white,
+            padding: const EdgeInsets.all(10),
+          ),
+          child: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.black,
+          )),
+    );
+  }
+
+  Widget _detailStoryBox(StoryData storyData) {
+    return ValueListenableBuilder(
+        valueListenable: boxSelectPostionedListener,
+        builder: (context, yPositioned, _) {
+          return AnimatedAlign(
+            duration: Durations.medium1,
+            alignment: Alignment(0, yPositioned),
+            curve: Curves.easeIn,
+            child: GestureDetector(
+              onPanUpdate: (details) {
+                if (details.delta.dy > 0) {
+                  boxSelectPostionedListener.value = 1;
+                }
+                if (details.delta.dy < 0) {
+                  boxSelectPostionedListener.value =
+                      yAlignmentDetailStorySlidingUp(
+                          MediaQuery.sizeOf(context).height);
+                }
               },
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size.zero,
-                elevation: 4,
-                backgroundColor: Colors.white,
-                padding: const EdgeInsets.all(10),
-              ),
-              child: const Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: Colors.black,
-              )),
-        ),
-        ValueListenableBuilder(
-            valueListenable: boxSelectPostionedListener,
-            builder: (context, yPositioned, _) {
-              return AnimatedAlign(
-                duration: Durations.medium1,
-                alignment: Alignment(0, yPositioned),
-                curve: Curves.easeIn,
-                child: GestureDetector(
-                  onPanUpdate: (details) {
-                    if (details.delta.dy > 0) {
-                      boxSelectPostionedListener.value = 1;
-                    }
-                    if (details.delta.dy < 0) {
-                      boxSelectPostionedListener.value =
-                          yAlignmentDetailStorySlidingUp(
-                              MediaQuery.sizeOf(context).height);
-                    }
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              offset: const Offset(1, 1),
-                              blurRadius: 4,
-                              spreadRadius: 2)
-                        ],
-                        color: const Color.fromARGB(255, 248, 248, 255),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        splashColor: Colors.black.withOpacity(0.03),
-                        onTap: () {
-                          if (storyData.lat != null && storyData.lon != null) {
-                            _mapController.animateCamera(
-                                CameraUpdate.newCameraPosition(CameraPosition(
-                                    target: LatLng(
-                                        storyData.lat ?? 0, storyData.lon ?? 0),
-                                    zoom: 16)));
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: Container(
-                                  width: 70,
-                                  height: 5,
-                                  margin:
-                                      const EdgeInsets.only(top: 15, bottom: 5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(12)),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+              child: Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          offset: const Offset(1, 1),
+                          blurRadius: 4,
+                          spreadRadius: 2)
+                    ],
+                    color: const Color.fromARGB(255, 248, 248, 255),
+                    borderRadius: BorderRadius.circular(12)),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    splashColor: Colors.black.withOpacity(0.03),
+                    onTap: () {
+                      if (storyData.lat != null && storyData.lon != null) {
+                        _mapController.animateCamera(
+                            CameraUpdate.newCameraPosition(CameraPosition(
+                                target: LatLng(
+                                    storyData.lat ?? 0, storyData.lon ?? 0),
+                                zoom: 16)));
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              width: 70,
+                              height: 5,
+                              margin: const EdgeInsets.only(top: 15, bottom: 5),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(12)),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Icon(
-                                          Icons.account_circle_outlined,
-                                          size: 30,
-                                        ),
-                                        const SizedBox(width: 7),
-                                        SizedBox(
-                                          width: 100,
-                                          child: Text(
-                                            storyData.name,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                                color: darkBlue,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 15),
-                                          ),
-                                        )
-                                      ],
+                                    const Icon(
+                                      Icons.account_circle_outlined,
+                                      size: 30,
                                     ),
-                                    Builder(builder: (context) {
-                                      return Text(
-                                        dateTimeFormater(
-                                            storyData.createdAt,
-                                            context
-                                                .watch<CommonCubit>()
-                                                .state
-                                                .languageCode),
+                                    const SizedBox(width: 7),
+                                    SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        storyData.name,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
-                                            color: Color(0xff524B6B),
-                                            fontSize: 12),
-                                      );
-                                    })
+                                            color: darkBlue,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 15),
+                                      ),
+                                    )
                                   ],
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: CachedNetworkImage(
-                                  height: 180,
-                                  width: double.infinity,
-                                  fit: BoxFit.fill,
-                                  imageUrl: storyData.photoUrl,
-                                  progressIndicatorBuilder:
-                                      (context, url, downloadProgress) =>
-                                          Container(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              MediaQuery.removePadding(
-                                context: context,
-                                removeTop: true,
-                                child: Scrollbar(
-                                  thumbVisibility: true,
-                                  thickness: 3,
-                                  child: SizedBox(
-                                    height: 100,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 12.0),
-                                      child: SingleChildScrollView(
-                                        child: Text(
-                                          storyData.description,
-                                        ),
-                                      ),
+                                Builder(builder: (context) {
+                                  return Text(
+                                    dateTimeFormater(
+                                        storyData.createdAt,
+                                        context
+                                            .watch<CommonCubit>()
+                                            .state
+                                            .languageCode),
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        color: Color(0xff524B6B), fontSize: 12),
+                                  );
+                                })
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: CachedNetworkImage(
+                              height: 180,
+                              width: double.infinity,
+                              fit: BoxFit.fill,
+                              imageUrl: storyData.photoUrl,
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) =>
+                                      Container(),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          MediaQuery.removePadding(
+                            context: context,
+                            removeTop: true,
+                            child: Scrollbar(
+                              thumbVisibility: true,
+                              thickness: 3,
+                              child: SizedBox(
+                                height: 100,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0),
+                                  child: SingleChildScrollView(
+                                    child: Text(
+                                      storyData.description,
                                     ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 20),
-                            ],
+                            ),
                           ),
-                        ),
+                          const SizedBox(height: 20),
+                        ],
                       ),
                     ),
                   ),
                 ),
-              );
-            }),
-      ],
-    );
+              ),
+            ),
+          );
+        });
   }
 
   Widget _loadingWidget() {
