@@ -4,7 +4,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 Future<List<int>> compressImage({required XFile imageFile}) async {
   int quality = 100;
   Uint8List? compressedImageBytes;
-  const int maxFileSize = 1024 * 1024;
+  const int maxFileSize = 1000 * 1000;
 
   while (true) {
     compressedImageBytes = await FlutterImageCompress.compressWithFile(

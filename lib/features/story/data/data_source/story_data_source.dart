@@ -20,14 +20,21 @@ class StoryDataSource {
     try {
       final uri = Uri.parse('${Env.baseUrl}/stories');
       final request = http.MultipartRequest('POST', uri);
+      Map<String, String> fields = {};
 
       final multiPartFile =
           http.MultipartFile.fromBytes('photo', imageBytes, filename: fileName);
-      final Map<String, String> fields = {
-        "description": description,
-        "lat": "$lat",
-        "lon": "$lon"
-      };
+      if (lat != null && lon != null) {
+        fields = {
+          "description": description,
+          "lat": "$lat",
+          "lon": "$lon",
+        };
+      } else {
+        fields = {
+          "description": description,
+        };
+      }
       final Map<String, String> headers = {
         "Content-type": 'multipart/form-data',
         "Authorization": "Bearer $token"
@@ -39,6 +46,7 @@ class StoryDataSource {
       final response = await request.send();
       final statusCode = response.statusCode;
       final responseBody = await response.stream.bytesToString();
+
       if (statusCode == 200 || statusCode == 201) {
         return jsonDecode(responseBody)['error'];
       } else {

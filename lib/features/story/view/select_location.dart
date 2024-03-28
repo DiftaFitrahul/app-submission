@@ -1,8 +1,4 @@
-import 'dart:developer';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:geocoding/geocoding.dart' as geo;
@@ -12,6 +8,7 @@ import 'package:story_app/features/common/utils/common.dart';
 import 'package:story_app/features/location/cubit/location_cubit.dart';
 
 import '../../../constant/color.dart';
+import '../../../utils/y_alignment_custom_sliding_up.dart';
 import '../../location/utils/location_error_dialog.dart';
 
 class SelectLocationScreen extends StatefulWidget {
@@ -23,6 +20,8 @@ class SelectLocationScreen extends StatefulWidget {
 
 class _PostStoryPaidState extends State<SelectLocationScreen> {
   final initialPosition = const LatLng(-6.175392, 106.827153);
+  final ValueNotifier<double> boxSelectPostionedListener =
+      ValueNotifier<double>(1);
   late GoogleMapController _mapController;
   LatLng? userSelectLatLngLocation;
   String? userSelectAddresLocation;
@@ -100,14 +99,22 @@ class _PostStoryPaidState extends State<SelectLocationScreen> {
                 onMoveNewPosition(latLngUser);
               },
             ),
-            _boxSelectButtonComp(
-              onSelectLocation: () async {
-                if (userSelectLatLngLocation != null) {
-                  context.pop(
-                      [userSelectLatLngLocation, userSelectAddresLocation]);
-                }
-              },
-            )
+            ValueListenableBuilder(
+                valueListenable: boxSelectPostionedListener,
+                builder: (context, yPositioned, _) {
+                  return _boxSelectButtonComp(
+                    screenHeight: MediaQuery.sizeOf(context).height,
+                    yPositioned: yPositioned,
+                    onSelectLocation: () async {
+                      if (userSelectLatLngLocation != null) {
+                        context.pop([
+                          userSelectLatLngLocation,
+                          userSelectAddresLocation
+                        ]);
+                      }
+                    },
+                  );
+                })
           ],
         ),
       ),
@@ -167,46 +174,70 @@ class _PostStoryPaidState extends State<SelectLocationScreen> {
     );
   }
 
-  Widget _boxSelectButtonComp({required VoidCallback onSelectLocation}) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        height: 175,
-        width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  offset: const Offset(1, 1),
-                  blurRadius: 4,
-                  spreadRadius: 2)
-            ],
-            color: const Color.fromARGB(255, 248, 248, 255),
-            borderRadius: BorderRadius.circular(12)),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24.0),
+  Widget _boxSelectButtonComp(
+      {required double yPositioned,
+      required VoidCallback onSelectLocation,
+      required double screenHeight}) {
+    return AnimatedAlign(
+      duration: Durations.medium1,
+      alignment: Alignment(0, yPositioned),
+      curve: Curves.easeIn,
+      child: GestureDetector(
+        onPanUpdate: (details) {
+          if (details.delta.dy > 0) {
+            boxSelectPostionedListener.value = 1;
+          }
+          if (details.delta.dy < 0) {
+            boxSelectPostionedListener.value =
+                yAlignmentPickLocationSlidingUp(screenHeight);
+          }
+        },
+        child: Container(
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          padding: const EdgeInsets.only(bottom: 10),
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    offset: const Offset(1, 1),
+                    blurRadius: 4,
+                    spreadRadius: 2)
+              ],
+              color: const Color.fromARGB(255, 248, 248, 255),
+              borderRadius: BorderRadius.circular(12)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Container(
+                width: 70,
+                height: 5,
+                margin: const EdgeInsets.only(top: 10, bottom: 15),
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(12)),
+              ),
               Text(
                 AppLocalizations.of(context)!.labelPickLocation,
                 style: const TextStyle(fontWeight: FontWeight.w500),
               ),
-              ElevatedButton(
-                  onPressed: onSelectLocation,
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: darkBlue,
-                      minimumSize: Size.zero,
-                      fixedSize: const Size(90, 90),
-                      shape: const CircleBorder()),
-                  child: Text(
-                    AppLocalizations.of(context)!.labelButtonPickLocation,
-                    style: const TextStyle(color: Colors.white),
-                  ))
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: ElevatedButton(
+                    onPressed: onSelectLocation,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: darkBlue,
+                        minimumSize: Size.zero,
+                        fixedSize: const Size(90, 90),
+                        shape: const CircleBorder()),
+                    child: Text(
+                      AppLocalizations.of(context)!.labelButtonPickLocation,
+                      style: const TextStyle(color: Colors.white),
+                    )),
+              )
             ],
           ),
         ),

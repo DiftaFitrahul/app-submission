@@ -1,11 +1,11 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:story_app/app_config.dart';
-import 'package:story_app/features/location/cubit/location_cubit.dart';
 
+import 'package:story_app/features/location/cubit/location_cubit.dart';
 import 'package:story_app/features/story/bloc/story_bloc.dart';
 import 'package:story_app/features/story/data/repository/story_repository.dart';
-import 'package:story_app/features/story/view/post_story.dart';
 import 'package:story_app/features/user/auth/bloc/auth_bloc.dart';
 import 'package:story_app/features/user/login/bloc/login_bloc.dart';
 import 'package:story_app/features/user/register/bloc/register_bloc.dart';
@@ -55,10 +55,10 @@ class MainApp extends StatelessWidget {
         child: Builder(builder: (context) {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
+            builder: DevicePreview.appBuilder,
             routerDelegate: appRouter?.routerDelegate,
             routeInformationProvider: appRouter?.routeInformationProvider,
             routeInformationParser: appRouter?.routeInformationParser,
-            // home: PostStory(),
             title: AppConfig.shared.title,
             localizationsDelegates: const [
               AppLocalizations.delegate,

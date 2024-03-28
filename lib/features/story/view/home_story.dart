@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:story_app/features/common/utils/common.dart';
 import 'package:story_app/utils/date_time_formater.dart';
+import 'package:story_app/utils/global_dialog.dart';
 
 import '../../../utils/server_client_failure_msg.dart';
 import '../../../constant/assets.dart';
@@ -100,8 +102,17 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: darkBlue,
-        onPressed: () {
-          context.pushNamed(AppRouteConstants.postStoryRoute);
+        onPressed: () async {
+          (Connectivity().checkConnectivity()).then((result) {
+            if (result[0] == ConnectivityResult.wifi ||
+                result[0] == ConnectivityResult.mobile) {
+              context.pushNamed(AppRouteConstants.postStoryRoute);
+            } else {
+              GlobalDialog.errorDialog(
+                  context: context,
+                  subtitle: AppLocalizations.of(context)!.noInternet);
+            }
+          });
         },
         child: const Icon(
           Icons.add,
