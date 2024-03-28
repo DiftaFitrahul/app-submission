@@ -3,15 +3,15 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:story_app/features/common/utils/common.dart';
-import 'package:story_app/utils/date_time_formater.dart';
-import 'package:story_app/utils/global_dialog.dart';
 
+import '../../../utils/date_time_formater.dart';
+import '../../../utils/global_dialog.dart';
 import '../../../utils/server_client_failure_msg.dart';
+import '../../../utils/shimmer_effect.dart';
 import '../../../constant/assets.dart';
 import '../../../constant/color.dart';
 import '../../../routes/routes_name.dart';
-import '../../../utils/shimmer_effect.dart';
+import '../../common/utils/common.dart';
 import '../../common/cubit/common_cubit.dart';
 import '../bloc/story_bloc.dart';
 

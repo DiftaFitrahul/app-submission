@@ -4,11 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:story_app/features/common/utils/common.dart';
-import 'package:story_app/features/location/cubit/location_cubit.dart';
 
 import '../../../constant/color.dart';
 import '../../../utils/y_alignment_custom_sliding_up.dart';
+import '../../common/utils/common.dart';
+import '../../location/cubit/location_cubit.dart';
 import '../../location/utils/location_error_dialog.dart';
 
 class SelectLocationScreen extends StatefulWidget {

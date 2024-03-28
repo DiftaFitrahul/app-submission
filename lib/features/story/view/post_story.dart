@@ -7,8 +7,8 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:story_app/app_config.dart';
-import 'package:story_app/routes/routes_name.dart';
 
+import '../../../routes/routes_name.dart';
 import '../../../constant/color.dart';
 import '../../../utils/global_dialog.dart';
 import '../../../utils/server_client_failure_msg.dart';
